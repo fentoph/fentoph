@@ -22,11 +22,13 @@ Our approach is simple: understand the problem, design a thoughtful solution, en
 
 ## About the CEO
 
-### Founder & CEO
+### Aslbek Qo'ziboyev — Founder & CEO
 
-**Fentoph's founder and CEO** leads the company's vision, product direction, engineering, and strategy.
+**Aslbek Qo'ziboyev** is the founder and CEO of Fentoph. He leads the company's vision, product direction, engineering, and strategy.
 
-As a founder-led company, Fentoph currently combines leadership and hands-on technical work. The CEO is directly involved in product development, architecture, technical decisions, experimentation, and building the company's long-term foundation.
+As a founder-led company, Fentoph currently combines leadership and hands-on technical work. Aslbek is directly involved in product development, architecture, technical decisions, experimentation, and building the company's long-term foundation.
+
+**GitHub:** [@aslbek-qoziboyev](https://github.com/aslbek-qoziboyev)
 
 The goal is to transform promising ideas into reliable products while establishing Fentoph as a lasting technology company.
 
@@ -61,6 +63,8 @@ Fentoph's projects span different areas of technology. Each project is developed
 | | |
 |---|---|
 | **Company** | Fentoph |
+| **Founder & CEO** | Aslbek Qo'ziboyev |
+| **GitHub** | [@aslbek-qoziboyev](https://github.com/aslbek-qoziboyev) |
 | **Type** | Independent Technology Company |
 | **Stage** | Early-stage / Founder-led |
 | **Focus** | Software, digital products & technology |
