@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, Check, Code2, Layers3, Menu, Plus, ShieldCheck, Sparkles, Trash2, X } from 'lucide-react';
+import { ArrowUpRight, Code2, Layers3, Menu, Plus, Sparkles, Trash2, X } from 'lucide-react';
 import './styles.css';
 
 const DEFAULT_PROJECTS = [
@@ -19,6 +19,8 @@ function useProjects() {
 
 function Home({ projects }) {
   const [menu, setMenu] = useState(false);
+  const [tilt, setTilt] = useState({x:0,y:0});
+  useEffect(() => { const move = (e) => setTilt({x:(e.clientX/window.innerWidth-.5)*18,y:(e.clientY/window.innerHeight-.5)*-18}); window.addEventListener('pointermove',move); return()=>window.removeEventListener('pointermove',move); }, []);
   return <div className="site">
     <header className="nav">
       <a className="brand" href="/"><span className="brand-mark">F</span> FENTOPH</a>
@@ -45,11 +47,11 @@ function Home({ projects }) {
             ['Software engineering','Murakkab g‘oyalarni ishonchli va kengayadigan dasturiy tizimlarga aylantiramiz.',Code2],
             ['Digital products','Web va mobil mahsulotlarni foydalanuvchi ehtiyojidan boshlab ishlab chiqamiz.',Layers3],
             ['Automation & cloud','API, avtomatlashtirish va cloud infratuzilmasi bilan jarayonlarni tezlashtiramiz.',Sparkles]
-          ].map(([title,text,Icon])=><article className="service" key={title}><Icon/><h3>{title}</h3><p>{text}</p></article>)}
+          ].map(([title,text,Icon])=><article className="service depth-card" key={title}><Icon/><h3>{title}</h3><p>{text}</p></article>)}
         </div>
       </section>
       <section id="loyihalar" className="section projects"><div className="section-label">03 / LOYIHALAR</div><div className="project-list">
-        {projects.map((p,i)=><article className="project" key={p.id}><div className="project-num">0{i+1}</div><div><span>{p.type}</span><h3>{p.name}</h3><p>{p.description}</p><small>{p.tech}</small></div><a href={p.link || '#'} aria-label={p.name}><ArrowUpRight/></a></article>)}
+        {projects.map((p,i)=><article className="project depth-row" key={p.id}><div className="project-num">0{i+1}</div><div><span>{p.type}</span><h3>{p.name}</h3><p>{p.description}</p><small>{p.tech}</small></div><a href={p.link || '#'} aria-label={p.name}><ArrowUpRight/></a></article>)}
       </div></section>
       <section id="aloqa" className="cta"><div className="section-label">04 / ALOQA</div><h2>Keyingi foydali mahsulot<br/><em>balki sizniki.</em></h2><a className="email" href="mailto:hello@fentoph.io">hello@fentoph.io <ArrowUpRight/></a></section>
     </main>
