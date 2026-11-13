@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360" role="img" aria-labelledby="title desc">
+  <title id="title">Fentoph logo</title>
+  <desc id="desc">Minimalist geometric Fentoph symbol with the Fentoph wordmark.</desc>
+
+  <g fill="#18202A">
+    <!-- Geometric F mark -->
+    <path d="M72 177
+             C80 138 89 96 104 53
+             C119 11 152 -11 196 -11
+             L412 -11
+             L375 38
+             C368 47 357 53 344 53
+             L207 53
+             C169 53 137 66 111 88
+             C94 103 80 125 72 177 Z"/>
+    <path d="M49 360
+             L72 220
+             C79 179 93 147 118 124
+             C144 100 176 88 212 88
+             L375 88
+             L340 134
+             C333 143 322 148 309 148
+             L221 148
+             C193 148 171 157 155 173
+             C140 189 132 211 128 237
+             L121 278
+             L183 278
+             L158 382
+             Z"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="455" y="232"
+        fill="#18202A"
+        font-family="Inter, Helvetica Neue, Arial, sans-serif"
+        font-size="142"
+        font-weight="650"
+        letter-spacing="-5">Fentoph</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 760" width="700" height="760" role="img" aria-labelledby="title desc">
+  <title id="title">Fentoph stacked logo</title>
+  <desc id="desc">The Fentoph geometric F symbol centered above the Fentoph wordmark.</desc>
+
+  <!-- Symbol -->
+  <g fill="#18202A" transform="translate(143 55) scale(1.15)">
+    <path d="M72 177
+             C80 138 89 96 104 53
+             C119 11 152 -11 196 -11
+             L412 -11
+             L375 38
+             C368 47 357 53 344 53
+             L207 53
+             C169 53 137 66 111 88
+             C94 103 80 125 72 177 Z"/>
+    <path d="M49 360
+             L72 220
+             C79 179 93 147 118 124
+             C144 100 176 88 212 88
+             L375 88
+             L340 134
+             C333 143 322 148 309 148
+             L221 148
+             C193 148 171 157 155 173
+             C140 189 132 211 128 237
+             L121 278
+             L183 278
+             L158 382
+             Z"/>
+  </g>
+
+  <!-- Wordmark below the symbol -->
+  <text x="350" y="635"
+        text-anchor="middle"
+        fill="#18202A"
+        font-family="Inter, Helvetica Neue, Arial, sans-serif"
+        font-size="112"
+        font-weight="650"
+        letter-spacing="-4">Fentoph</text>
+</svg>
