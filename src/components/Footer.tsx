@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
 import { 
   ShieldCheck, 
@@ -8,22 +8,82 @@ import {
   Linkedin, 
   Globe, 
   ExternalLink,
-  Heart
+  Heart,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  Lock,
+  Zap
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { navigate } = useRouter();
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
   const handleNav = (path: string) => {
     navigate(path);
   };
 
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail.trim() || !newsletterEmail.includes('@')) return;
+    setSubscribed(true);
+    setNewsletterEmail('');
+    setTimeout(() => setSubscribed(false), 5000);
+  };
+
   return (
-    <footer className="bg-[#05080e] text-slate-400 border-t border-slate-800/80 pt-16 pb-12 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#03060c] text-slate-400 border-t border-slate-800/80 pt-16 pb-12 transition-colors relative overflow-hidden">
+      
+      {/* Background glow accent */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-gradient-to-t from-blue-600/10 via-cyan-500/5 to-transparent blur-[120px] pointer-events-none rounded-full"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
+        {/* Newsletter & Headline Banner */}
+        <div className="pb-12 border-b border-slate-800/80 mb-12 flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="space-y-2 max-w-xl text-center lg:text-left">
+            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight font-mono">
+              FENTOPH ENGINEERING BRIEF
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              Kompaniyaning eng so'nggi texnik yangiliklari, arxitektura tahlillari va xavfsizlik yangilanishlaridan birinchilardan bo'lib xabardor bo'ling.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubscribe} className="w-full max-w-md">
+            <div className="relative flex items-center bg-slate-900/90 border border-slate-700/80 rounded-2xl p-1.5 focus-within:border-cyan-500/80 transition-colors shadow-lg">
+              <input
+                type="email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                placeholder="Elektron pochta manzilingiz..."
+                className="w-full bg-transparent px-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none"
+                required
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-xs whitespace-nowrap transition-all shadow-md active:scale-95 flex items-center gap-1.5"
+              >
+                {subscribed ? (
+                  <>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                    <span>A'zo bo'lindi</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Obuna</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+
         {/* Top Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 pb-12 border-b border-slate-800/60">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 pb-12 border-b border-slate-800/80">
           
           {/* Brand Info (Spans 2 columns on large) */}
           <div className="col-span-2 space-y-4">
@@ -31,8 +91,8 @@ export const Footer: React.FC = () => {
               onClick={() => handleNav('/')}
               className="flex items-center gap-3 cursor-pointer group w-fit"
             >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 p-0.5">
-                <div className="w-full h-full bg-[#0b1320] rounded-[10px] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 via-indigo-600 to-cyan-400 p-0.5 shadow-md shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-shadow">
+                <div className="w-full h-full bg-[#080d16] rounded-[10px] flex items-center justify-center">
                   <img src="/images/favicon.svg" alt="Fentoph" className="w-5 h-5 object-contain" />
                 </div>
               </div>
@@ -44,7 +104,7 @@ export const Footer: React.FC = () => {
             </p>
 
             {/* System Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               Barcha tizimlar faol: 99.99% Uptime
             </div>
@@ -92,7 +152,7 @@ export const Footer: React.FC = () => {
 
           {/* Products Column */}
           <div className="space-y-3">
-            <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Mahsulotlar</h4>
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider font-mono">Mahsulotlar</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <button onClick={() => handleNav('/products/finilya')} className="hover:text-cyan-400 transition-colors">
@@ -115,7 +175,7 @@ export const Footer: React.FC = () => {
                 </button>
               </li>
               <li>
-                <button onClick={() => handleNav('/products/fentoph-cloud')} className="hover:text-cyan-400 transition-colors text-cyan-300 font-medium">
+                <button onClick={() => handleNav('/products/fentoph-cloud')} className="hover:text-cyan-400 transition-colors text-cyan-300 font-semibold">
                   Fentoph ID (SSO)
                 </button>
               </li>
@@ -124,7 +184,7 @@ export const Footer: React.FC = () => {
 
           {/* Solutions Column */}
           <div className="space-y-3">
-            <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Yechimlar</h4>
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider font-mono">Yechimlar</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <button onClick={() => handleNav('/solutions/fintech-digital-banking')} className="hover:text-cyan-400 transition-colors">
@@ -156,7 +216,7 @@ export const Footer: React.FC = () => {
 
           {/* Company & Docs Column */}
           <div className="space-y-3">
-            <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Kompaniya</h4>
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider font-mono">Kompaniya</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <button onClick={() => handleNav('/about')} className="hover:text-white transition-colors">
@@ -191,10 +251,10 @@ export const Footer: React.FC = () => {
 
           {/* Security & Legal Column */}
           <div className="space-y-3">
-            <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono">Xavfsizlik & Huquq</h4>
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider font-mono">Xavfsizlik & Huquq</h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => handleNav('/security')} className="hover:text-cyan-400 transition-colors flex items-center gap-1 text-cyan-300 font-medium">
+                <button onClick={() => handleNav('/security')} className="hover:text-cyan-400 transition-colors flex items-center gap-1 text-cyan-300 font-semibold">
                   <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
                   Xavfsizlik Markazi
                 </button>
@@ -227,11 +287,11 @@ export const Footer: React.FC = () => {
 
           <div className="flex items-center gap-4 text-slate-400">
             <span className="flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5" /> Toshkent, O'zbekiston
+              <Globe className="w-3.5 h-3.5 text-cyan-400" /> Toshkent, O'zbekiston
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1">
-              Fentoph Engineering tomonidan yaratildi
+            <span className="flex items-center gap-1 font-mono text-cyan-300">
+              Built for the Future
             </span>
           </div>
         </div>
