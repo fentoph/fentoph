@@ -3,12 +3,10 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "cleanUrls": true,
-  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!assets/|favicon.ico|images/|robots.txt).*|$)",
-      "destination": "/index.html"
+      "source": "/(.*)",
+      "destination": "/"
     }
   ],
   "headers": [
