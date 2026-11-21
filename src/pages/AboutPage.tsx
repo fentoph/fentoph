@@ -175,10 +175,10 @@ export const AboutPage: React.FC<AboutPageProps> = () => {
               Bosh Ofis va R&D Markaz
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-              Toshkentdan Butun Dunyoga
+              Xivadan Butun Dunyoga
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Fentoph bosh ofisi Toshkent shahrida joylashgan bo'lib, xalqaro bozorlar uchun yuqori texnologik yechimlarni eksport qilishga yo'naltirilgan.
+              Fentoph bosh ofisi va muhandislik markazi qadimiy va boy madaniyatga ega Xiva shahrida (Xorazm viloyati) joylashgan bo'lib, xalqaro bozorlar uchun yuqori texnologik yechimlarni ishlab chiqishga yo'naltirilgan.
             </p>
           </div>
 

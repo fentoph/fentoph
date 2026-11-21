@@ -277,7 +277,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs text-slate-400 font-mono py-3 px-6 rounded-2xl bg-slate-900/40 border border-slate-800/60 backdrop-blur-md">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-white font-semibold">150,000+</span> Faol ID hisoblari
+            <span className="text-white font-semibold">Yagona Fentoph ID</span> Ekotizimi
           </span>
           <span className="hidden sm:inline text-slate-700">•</span>
           <span className="flex items-center gap-1.5">
@@ -354,22 +354,22 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <div className="mt-6 p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 font-mono text-xs space-y-3">
                   <div className="flex items-center justify-between text-slate-400 border-b border-slate-800/60 pb-2">
                     <span className="flex items-center gap-1.5 text-white">
-                      <TrendingUp className="w-4 h-4 text-emerald-400" /> Sof Daromad (P&L)
+                      <TrendingUp className="w-4 h-4 text-emerald-400" /> Avtomatik Kassa & P&L Balansi
                     </span>
-                    <span className="text-emerald-400 font-bold">+28.4% o'sish</span>
+                    <span className="text-emerald-400 font-bold">Real-Vaqtda Sinxron</span>
                   </div>
                   <div className="grid grid-cols-3 gap-3 text-center">
                     <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <div className="text-[10px] text-slate-500">Tushum</div>
-                      <div className="text-white font-bold text-sm mt-0.5">$184,200</div>
+                      <div className="text-[10px] text-slate-500">Bank & Kassa</div>
+                      <div className="text-white font-bold text-xs mt-0.5">Avto-Rekonsiliatsiya</div>
                     </div>
                     <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <div className="text-[10px] text-slate-500">Xarajat</div>
-                      <div className="text-white font-bold text-sm mt-0.5">$92,450</div>
+                      <div className="text-[10px] text-slate-500">Xarajatlar</div>
+                      <div className="text-white font-bold text-xs mt-0.5">Toifali Nazorat</div>
                     </div>
                     <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <div className="text-[10px] text-slate-500">Sof Foyda</div>
-                      <div className="text-emerald-400 font-bold text-sm mt-0.5">$91,750</div>
+                      <div className="text-[10px] text-slate-500">Moliyaviy Audit</div>
+                      <div className="text-emerald-400 font-bold text-xs mt-0.5">AI Tahlil Faol</div>
                     </div>
                   </div>
                 </div>
@@ -461,12 +461,12 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                 <div className="mt-6 grid grid-cols-2 gap-3 text-xs font-mono">
                   <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-                    <div className="text-slate-500 text-[10px]">AI Narx Prognozi</div>
-                    <div className="text-amber-400 font-bold mt-1">+14.2% Marja oshishi</div>
+                    <div className="text-slate-500 text-[10px]">AI Narx Dinamikasi</div>
+                    <div className="text-amber-400 font-bold mt-1">Raqobat monitoringi</div>
                   </div>
                   <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-                    <div className="text-slate-500 text-[10px]">Avtomatik Tavsiya</div>
-                    <div className="text-white font-bold mt-1">2,400+ xaridlar</div>
+                    <div className="text-slate-500 text-[10px]">Ombor Qoldiqlari</div>
+                    <div className="text-white font-bold mt-1">Avtomatik hisob</div>
                   </div>
                 </div>
               </div>

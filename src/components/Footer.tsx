@@ -287,7 +287,7 @@ export const Footer: React.FC = () => {
 
           <div className="flex items-center gap-4 text-slate-400">
             <span className="flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5 text-cyan-400" /> Toshkent, O'zbekiston
+              <Globe className="w-3.5 h-3.5 text-cyan-400" /> Xiva, Xorazm, O'zbekiston
             </span>
             <span>•</span>
             <span className="flex items-center gap-1 font-mono text-cyan-300">

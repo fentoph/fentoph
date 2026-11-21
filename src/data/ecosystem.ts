@@ -22,100 +22,96 @@ export interface TimelineMilestone {
 
 export const ECOSYSTEM_METRICS: Metric[] = [
   {
-    label: 'Faol Foydalanuvchilar',
-    value: '150,000+',
-    change: '+42% bu chorakda',
-    description: 'Finilya, EskiBozor va Fsent bo\'ylab ro\'yxatdan o\'tganlar'
+    label: 'Kechikish Vaqti (Latency)',
+    value: '< 15 ms',
+    change: 'Global p99',
+    description: 'Sub-millisekundlik kesh va yuqori tezlikdagi API arxitekturasi'
   },
   {
-    label: 'Platforma Uptime',
+    label: 'Infratuzilma Uptime',
     value: '99.99%',
     change: 'Kafolatlangan SLA',
-    description: 'Yuqori darajadagi uzluksiz infratuzilma'
+    description: 'Taqsimlangan zaxira klasterlari va avtomatik tiklanish'
   },
   {
-    label: 'Kunlik Tranzaksiyalar',
-    value: '1.2M+',
-    change: 'Real-vaqt tizimi',
-    description: 'Moliya va xaridlar oqimi xavfsiz qayta ishlanadi'
+    label: 'Kriptografik Himoya',
+    value: 'Signal E2EE',
+    change: 'Double Ratchet',
+    description: 'Fsent aloqasida Curve25519 va scrypt xotira-og\'ir xeshlash'
   },
   {
-    label: 'Shifrlangan Xabarlar',
-    value: '50M+',
-    change: '100% maxfiy',
-    description: 'Fsent protokoli orqali uzatilgan xabarlar'
+    label: 'Yagona Ekotizim',
+    value: '5 ta Mahsulot',
+    change: 'Fentoph ID (SSO)',
+    description: 'Finilya, EskiBozor, Fsent, Phentist va Fentoph Cloud integratsiyasi'
   }
 ];
 
 export const COMPANY_VALUES = [
   {
-    title: 'Xavfsizlik va Maxfiylik Birinchi O\'rinda',
-    description: 'Foydalanuvchilarimizning ma\'lumotlari hech qachon uchinchi shaxslarga sotilmaydi yoki suiiste\'mol qilinmaydi. Har bir arxitektura Zero-Knowledge tamoyilida qurilgan.',
+    title: 'Haqiqiy Xavfsizlik va Maxfiylik',
+    description: 'Foydalanuvchilarimiz ma\'lumotlari hech qachon sotilmaydi yoki suiiste\'mol qilinmaydi. Har bir xizmat Zero-Knowledge va RBAC tamoyillariga asoslangan.',
     icon: 'ShieldCheck'
   },
   {
     title: 'Sinergiya va Yagona Ekotizim',
-    description: 'Biz alohida ilovalar yaratmaymiz — biz bir-birini to\'ldiruvchi, kuchaytiruvchi va vaqtni tejovchi yagona organik texnologik olam quramiz.',
+    description: 'Biz alohida-alohida ajratilgan ilovalar emas, balki bir-birini mustahkamlovchi va vaqtni tejovchi yagona organik texnologik muhit yaratamiz.',
     icon: 'Layers'
   },
   {
-    title: 'Sun\'iy Intellekt Amaliyotda',
-    description: 'AI faqat quruq marketing so\'zi emas. Finilya, EskiBozor va Fsent tizimlarida sun\'iy intellekt real foyda keltiradi va xarajatlarni qisqartiradi.',
+    title: 'Haqiqiy Amaliy Sun\'iy Intellekt',
+    description: 'AI biz uchun shunchaki marketing emas. Finilya, EskiBozor va Fsent tizimlarida sun\'iy intellekt biznes jarayonlarini aniq optimallashtiradi.',
     icon: 'Sparkles'
   },
   {
-    title: 'O\'zbekiston va Global Bozor',
-    description: 'Mahalliy madaniyat, til va qonunchilikka 100% moslashgan holda, xalqaro miqyosdagi eng yuqori standartlarga javob beradigan sifat yaratamiz.',
+    title: 'Xiva, Xorazmdan Global Bozorga',
+    description: 'Buyuk allomalar yurti — qadimiy Xiva zaminida zamonaviy intellektual texnologiyalar yaratib, jahon darajasidagi sifat standartini taqdim etamiz.',
     icon: 'Globe'
   }
 ];
 
 export const TIMELINE: TimelineMilestone[] = [
   {
-    year: '2023',
-    title: 'Fentoph g\'oyasining tug\'ilishi',
-    description: 'Yagona ekotizim g\'oyasi asosida Finilya prototipi ustida dastlabki ishlar boshlandi.'
-  },
-  {
     year: '2024',
-    title: 'Finilya va Fsent MVP ishga tushirildi',
-    description: 'Dastlabki 10,000 foydalanuvchilar qamrab olindi, harbiy darajadagi shifrlash protokoli joriy qilindi.'
+    title: 'Fentoph g\'oyasi va Finilya poydevori',
+    description: 'Xiva shahrida kichik biznes va korxonalar uchun zamonaviy raqamli moliya tizimi arxitekturasi loyihalashtirildi.'
   },
   {
     year: '2025',
-    title: 'EskiBozor va Phentist AI laboratoriyasi',
-    description: 'Elektron tijoratda AI tahlili orqali sotuvchilarga yangi imkoniyatlar yaratildi va o\'zbek tilidagi LLM ishlab chiqildi.'
+    title: 'Fsent va Phentist AI laboratoriyasi',
+    description: 'Harbiy darajadagi shifrlash protokollari asosida Fsent messenjeri va o\'zbek tili uchun moslashtirilgan AI modellari ishlab chiqildi.'
   },
   {
     year: '2026',
-    title: 'Fentoph ID va Yagona Ekotizim',
-    description: 'Barcha platformalar yagona hisob (SSO) ostida birlashtirildi, 150K+ faol auditoriyaga erishildi.'
+    title: 'EskiBozor va Yagona Fentoph ID (SSO)',
+    description: 'Barcha servislar yagona xavfsiz autentifikatsiya markazi ostida birlashtirildi va to\'liq production-ready bosqichga yetkazildi.'
   }
 ];
 
 export const TEAM_MEMBERS: TeamMember[] = [
   {
-    name: 'Sherzodbek Aliyev',
-    role: 'Asoschi va Bosh Ijrochi Direktor (CEO)',
-    bio: 'Texnologiya va ekotizimlar yaratish bo\'yicha 10+ yillik tajribaga ega strateg.',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+    name: 'Aslbek Qo\'ziboyev',
+    role: 'Asoschi va Bosh Dasturiy Arxitektor (Founder & Lead Architect)',
+    bio: 'Fentoph ekotizimining asoschisi, taqsimlangan tizimlar, zamonaviy web texnologiyalari va kiberxavfsizlik muhandisi. Xiva, Xorazm.',
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+    github: 'https://github.com/aslbek-qoziboyev'
   },
   {
-    name: 'Azizbek Saidov',
-    role: 'Bosh Texnologiya Direktori (CTO)',
-    bio: 'Taqsimlangan tizimlar, kriptografiya va yuqori yuklamali infratuzilma mutaxassisi.',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80'
+    name: 'Fentoph Core Engineering Team',
+    role: 'Tizim Arxitekturasi va Backend Muhandislari',
+    bio: 'Yuqori unumdorlikdagi mikroxizmatlar, relatsion ma\'lumotlar bazalari, sessiyalar boshqaruvi va API xavfsizligini ta\'minlovchi muhandislar guruhi.',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80'
   },
   {
-    name: 'Malika Karimova',
-    role: 'Bosh Mahsulot Dizayneri (Head of Product & Design)',
-    bio: 'Oddiylik, nafosat va intuitiv interfeyslar orqali millionlab foydalanuvchilar qalbini zabt etuvchi dizayner.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80'
-  },
-  {
-    name: 'Farrux Zokirov',
-    role: 'Sun\'iy Intellekt bo\'limi rahbari (Head of AI)',
-    bio: 'Katta til modellari, neyrotarmoqlar va avtonom agentlar bo\'yicha tadqiqotchi.',
+    name: 'Fentoph AI & Data Lab',
+    role: 'Sun\'iy Intellekt va Katta Modellar Bo\'limi',
+    bio: 'Phentist AI yadrosi, avtonom agentlar quvuri, biznes jarayonlarini tahlil qilish va semantik qidiruv ustida ishlovchi tadqiqotchilar jamoasi.',
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80'
+  },
+  {
+    name: 'Fentoph Security & Privacy Ops',
+    role: 'Kiberxavfsizlik va Zero-Trust Nazorati',
+    bio: 'Signal Double Ratchet shifrlash, server-side RBAC, brute-force himoyasi va xavfsizlik auditlarini doimiy nazorat qiluvchi xavfsizlik bo\'linmasi.',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80'
   }
 ];

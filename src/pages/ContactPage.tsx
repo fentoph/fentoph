@@ -84,7 +84,7 @@ export const ContactPage: React.FC = () => {
                   <MapPin className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="font-semibold text-white block">Fentoph Group HQ:</span>
-                    Toshkent shahri, Mirzo Ulug'bek tumani, IT Park Binosi, 4-qavat
+                    Xiva shahri, Xorazm viloyati, Ichan Qal'a / IT Park Xiva Markazi
                   </div>
                 </div>
 

@@ -82,7 +82,7 @@ export const CareersPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { title: 'Yuqori Maosh & Bonuslar', desc: 'Valyutada belgilangan raqobatbardosh oylik maosh va choraklik KPI bonuslar', icon: <DollarSign className="w-5 h-5 text-emerald-400" /> },
-            { title: 'Moslashuvchan Ish Tartibi', desc: 'Toshkentdagi qulay ofis yoki xohishingizga ko\'ra gibrid / masofaviy ishlash', icon: <Laptop className="w-5 h-5 text-cyan-400" /> },
+            { title: 'Moslashuvchan Ish Tartibi', desc: 'Xivadagi qulay ofis yoki xohishingizga ko\'ra gibrid / masofaviy ishlash', icon: <Laptop className="w-5 h-5 text-cyan-400" /> },
             { title: 'Eng So\'nggi Texnika', desc: 'Eng yangi Apple Silicon MacBook Pro va ish uchun zarur barcha zamonaviy uskunalar', icon: <Zap className="w-5 h-5 text-amber-400" /> },
             { title: 'Tibbiy Sug\'urta & Sog\'liq', desc: 'Xodim va uning oilasi uchun to\'liq qamrovli xususiy tibbiy sug\'urta paketi', icon: <HeartPulse className="w-5 h-5 text-red-400" /> },
           ].map((p, idx) => (

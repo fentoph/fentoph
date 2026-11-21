@@ -24,7 +24,7 @@ export const SOLUTIONS_DATA: Solution[] = [
       { title: 'To\'liq Shaffoflik', desc: 'Kompaniya rahbari istalgan paytda kassa holatini telefonida ko\'ra oladi', icon: 'Eye' }
     ],
     caseStudy: {
-      client: 'Apex Retail Distribution (Toshkent)',
+      client: 'Apex Retail Distribution (Xiva, Xorazm)',
       metrics: [
         { label: 'Oylik tejamkorlik', value: '42,000,000 UZS' },
         { label: 'Hisobot tezligi', value: '1 kundan 3 soniyaga' },

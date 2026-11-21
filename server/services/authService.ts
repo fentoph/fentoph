@@ -72,14 +72,17 @@ export function generateSessionToken(): string {
 }
 
 /**
- * Find user by email or username
+ * Find user by email, username, or Fentoph ID (e.g. FP-123456)
  */
 export function findUserByLogin(login: string): UserRecord | undefined {
-  const stmt = db.prepare<[string, string], UserRecord>(`
+  const clean = login.trim();
+  const stmt = db.prepare<[string, string, string], UserRecord>(`
     SELECT * FROM users 
-    WHERE email = ? COLLATE NOCASE OR username = ? COLLATE NOCASE
+    WHERE email = ? COLLATE NOCASE 
+       OR username = ? COLLATE NOCASE 
+       OR fentoph_id = ? COLLATE NOCASE
   `);
-  return stmt.get(login.trim(), login.trim());
+  return stmt.get(clean, clean, clean);
 }
 
 /**
