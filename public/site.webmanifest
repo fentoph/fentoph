@@ -1,0 +1,21 @@
+{
+  "name": "Fentoph - Kelajak Texnologiyalari Ekotizimi",
+  "short_name": "Fentoph",
+  "description": "Fentoph - Moliya, elektron tijorat, kiberxavfsizlik va sun'iy intellekt texnologiyalarining yagona raqamli makoni.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050811",
+  "theme_color": "#050811",
+  "icons": [
+    {
+      "src": "/images/no_bg_favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/no_bg_favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

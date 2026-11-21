@@ -61,9 +61,22 @@ export const SEO: React.FC = () => {
     document.title = title;
 
     // Update meta description
-    let metaDesc = document.querySelector('meta[name="description"]');
+    const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
       metaDesc.setAttribute('content', description);
+    }
+
+    // Update Open Graph tags dynamically
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', title);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+
+    // Update Canonical URL dynamically
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', window.location.origin + currentPath);
     }
   }, [currentPath, routeInfo]);
 

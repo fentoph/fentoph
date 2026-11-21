@@ -2,16 +2,104 @@
 <html lang="uz" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fentoph - Kelajak Texnologiyalari va Raqamli Ekotizimi</title>
-    <meta name="description" content="Fentoph - Moliya, tijorat, sun'iy intellekt va aloqa texnologiyalarini birlashtiruvchi global ekotizim." />
+    <meta name="description" content="Fentoph - Moliya, savdo, sun'iy intellekt va aloqa texnologiyalarini birlashtiruvchi global intellektual ekotizim (Xiva, Xorazm)." />
+    <meta name="keywords" content="Fentoph, Finilya, EskiBozor, Fsent, Phentist, Fentoph ID, O'zbekiston texnologiyalari, Xiva IT Park, Sun'iy intellekt" />
+    <meta name="author" content="Fentoph Engineering Group / Aslbek Qo'ziboyev" />
+
+    <!-- Google Search Console & Search Crawlers -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <!-- Google Search Console Verification Meta Tag: Foydalanuvchi o'z tokenini shu yerga qo'yishi mumkin -->
+    <meta name="google-site-verification" content="fentoph-google-search-console-verification-key" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://fentoph-coral.vercel.app/" />
+
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/no_bg_favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#050811" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="uz_UZ" />
+    <meta property="og:url" content="https://fentoph-coral.vercel.app/" />
+    <meta property="og:site_name" content="Fentoph" />
+    <meta property="og:title" content="Fentoph - Kelajak Texnologiyalari va Raqamli Ekotizimi" />
+    <meta property="og:description" content="Fentoph - FinTech, intellektual savdo, E2EE xavfsiz aloqa va O'zbek tili LLM texnologiyalarining yagona raqamli makoni." />
+    <meta property="og:image" content="https://fentoph-coral.vercel.app/images/no_bg_logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@fentoph" />
+    <meta name="twitter:creator" content="@aslbek_qoziboyev" />
+    <meta name="twitter:title" content="Fentoph - Kelajak Texnologiyalari va Raqamli Ekotizimi" />
+    <meta name="twitter:description" content="Fentoph - FinTech, intellektual savdo va E2EE aloqa ekotizimi." />
+    <meta name="twitter:image" content="https://fentoph-coral.vercel.app/images/no_bg_logo.png" />
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Schema.org JSON-LD Structured Data for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Corporation",
+          "@id": "https://fentoph-coral.vercel.app/#organization",
+          "name": "Fentoph",
+          "url": "https://fentoph-coral.vercel.app",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://fentoph-coral.vercel.app/images/no_bg_logo.png"
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Aslbek Qo'ziboyev",
+            "jobTitle": "Founder & Lead Software Architect"
+          },
+          "foundingLocation": {
+            "@type": "Place",
+            "name": "Xiva, Xorazm, O'zbekiston"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Xiva",
+            "addressRegion": "Xorazm",
+            "addressCountry": "UZ"
+          },
+          "sameAs": [
+            "https://github.com/fentoph"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://fentoph-coral.vercel.app/#website",
+          "url": "https://fentoph-coral.vercel.app",
+          "name": "Fentoph",
+          "publisher": {
+            "@id": "https://fentoph-coral.vercel.app/#organization"
+          },
+          "inLanguage": "uz-UZ",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://fentoph-coral.vercel.app/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
-  <body class="bg-[#0b111a] text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen">
+  <body class="bg-[#050811] text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /verify-email
+Disallow: /forgot-password
+Disallow: /api/
+
+Sitemap: https://fentoph-coral.vercel.app/sitemap.xml
+Sitemap: https://fentoph.com/sitemap.xml
