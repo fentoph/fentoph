@@ -335,6 +335,120 @@ authRouter.post('/google', rateLimiter(60000, 10), async (req, res) => {
 });
 
 /**
+ * POST /api/auth/fentoph-id
+ * Fentoph ID (OAuth 2.0 / OIDC) token exchange & session generation
+ */
+authRouter.post('/fentoph-id', rateLimiter(60000, 15), async (req, res) => {
+  try {
+    const { code, code_verifier, redirect_uri } = req.body;
+
+    if (!code) {
+      return res.status(400).json({ error: 'Avtorizatsiya kodi (code) talab qilinadi.' });
+    }
+
+    // Exchange code for token with Fentoph ID Identity Server
+    const tokenResponse = await fetch('https://fentophid.vercel.app/api/oauth/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        grant_type: 'authorization_code',
+        code,
+        client_id: 'fentoph_corporate_portal',
+        client_secret: 'fentoph_secret_portal_key_2026',
+        redirect_uri: redirect_uri || 'https://fentoph.vercel.app/auth/fentoph-callback',
+        code_verifier,
+      }),
+    });
+
+    const tokenData = await tokenResponse.json() as any;
+    if (!tokenResponse.ok) {
+      return res.status(400).json({
+        error: tokenData.error_description || tokenData.error || 'Token olishda xatolik yuz berdi.',
+      });
+    }
+
+    // Retrieve user profile from Fentoph ID
+    const userinfoResponse = await fetch('https://fentophid.vercel.app/api/oauth/userinfo', {
+      headers: { Authorization: `Bearer ${tokenData.access_token}` },
+    });
+
+    const profile = await userinfoResponse.json() as any;
+    if (!userinfoResponse.ok) {
+      return res.status(400).json({ error: 'Fentoph ID ma\'lumotlarini yuklab bo\'lmadi.' });
+    }
+
+    const fentophEmail = (profile.email || `${profile.username}@fmail.com`).toLowerCase();
+    const fentophUsername = profile.username || fentophEmail.split('@')[0];
+    const fentophName = profile.name || `${profile.firstName || ''} ${profile.lastName || ''}`.trim() || fentophUsername;
+    const fentophSub = profile.sub || `fp_${Date.now()}`;
+    const avatarUrl = '/images/no_bg_favicon.png';
+
+    let user = db.prepare(`
+      SELECT * FROM users 
+      WHERE email = ? COLLATE NOCASE OR username = ? COLLATE NOCASE OR fentoph_id = ? COLLATE NOCASE
+    `).get(fentophEmail, fentophUsername, fentophSub) as any;
+
+    if (!user) {
+      const userId = `usr_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
+      const fentophId = `FP-${fentophUsername}`;
+
+      db.transaction(() => {
+        db.prepare(`
+          INSERT INTO users (id, fentoph_id, email, username, password_hash, role, email_verified, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
+        `).run(userId, fentophId, fentophEmail, fentophUsername, 'oauth:fentoph_id:sso', profile.role === 'ADMIN' ? 'ADMIN' : 'USER');
+
+        db.prepare(`
+          INSERT INTO profiles (id, user_id, full_name, avatar_url, created_at, updated_at)
+          VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))
+        `).run(`prf_${userId}`, userId, fentophName, avatarUrl);
+
+        db.prepare(`
+          INSERT INTO accounts (id, user_id, provider, provider_account_id, created_at)
+          VALUES (?, ?, 'fentoph_id', ?, datetime('now'))
+        `).run(`acc_${Date.now()}`, userId, fentophSub);
+      })();
+
+      user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+    }
+
+    const sessionToken = createSession(user.id, {
+      ip: req.ip,
+      device: req.headers['user-agent'] || 'Fentoph ID SSO Portal'
+    });
+
+    const isProd = process.env.NODE_ENV === 'production';
+    res.cookie('fentoph_session', sessionToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'strict' : 'lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      path: '/'
+    });
+
+    const profileData = getProfileByUserId(user.id);
+    return res.json({
+      success: true,
+      sessionToken,
+      user: {
+        id: user.id,
+        fentophId: user.fentoph_id,
+        fullName: profileData?.full_name || fentophName,
+        username: user.username,
+        email: user.email,
+        avatar: profileData?.avatar_url || avatarUrl,
+        role: user.role === 'ADMIN' || user.role === 'SUPER_ADMIN' ? 'Administrator' : 'Foydalanuvchi',
+        emailVerified: true,
+        twoFactorEnabled: false
+      }
+    });
+  } catch (error) {
+    console.error('Fentoph ID OAuth Error:', error);
+    return res.status(500).json({ error: 'Fentoph ID autentifikatsiyasida kutilmagan server xatoligi yuz berdi.' });
+  }
+});
+
+/**
  * POST /api/auth/verify-email
  */
 authRouter.post('/verify-email', rateLimiter(60000, 5), async (req: AuthenticatedRequest, res) => {

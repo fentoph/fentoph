@@ -26,6 +26,7 @@ import { LoginPage } from './pages/Auth/LoginPage';
 import { RegisterPage } from './pages/Auth/RegisterPage';
 import { VerifyEmailPage } from './pages/Auth/VerifyEmailPage';
 import { ForgotPasswordPage } from './pages/Auth/ForgotPasswordPage';
+import { FentophCallbackPage } from './pages/Auth/FentophCallbackPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AdminPage } from './pages/Admin/AdminPage';
 import { LegalPage } from './pages/Legal/LegalPage';
@@ -109,6 +110,7 @@ const AppContent: React.FC = () => {
     if (currentPath === '/register') return <RegisterPage />;
     if (currentPath === '/verify-email') return <VerifyEmailPage />;
     if (currentPath === '/forgot-password') return <ForgotPasswordPage />;
+    if (currentPath === '/auth/fentoph-callback' || currentPath === '/auth/callback') return <FentophCallbackPage />;
 
     // Protected & SaaS Portals
     if (currentPath === '/dashboard') return <DashboardPage />;

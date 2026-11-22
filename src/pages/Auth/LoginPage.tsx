@@ -19,7 +19,7 @@ import {
 
 export const LoginPage: React.FC = () => {
   const { navigate } = useRouter();
-  const { login, loginWithGoogle, loginAsDemoUser } = useAuth();
+  const { login, loginWithGoogle, loginWithFentophId, loginAsDemoUser } = useAuth();
   const toast = useToast();
 
   const [loginMethod, setLoginMethod] = useState<'fentoph_id' | 'email_username'>('fentoph_id');
@@ -30,6 +30,16 @@ export const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  const handleFentophIdSso = async () => {
+    setIsLoading(true);
+    try {
+      await loginWithFentophId();
+    } catch (err: any) {
+      toast.error(err?.message || "Fentoph ID bilan bog'lanishda xatolik yuz berdi.");
+      setIsLoading(false);
+    }
+  };
 
   const activeIdentifier = loginMethod === 'fentoph_id' 
     ? (fentophIdInput.startsWith('FP-') ? fentophIdInput : `FP-${fentophIdInput.replace(/[^0-9]/g, '')}`)
@@ -145,6 +155,44 @@ export const LoginPage: React.FC = () => {
         {/* Form Container */}
         <div className="p-7 sm:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl backdrop-blur-2xl space-y-5">
           
+          {/* Fentoph ID Official SSO Action */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-950/50 via-indigo-950/40 to-cyan-950/40 border border-cyan-500/35 shadow-lg space-y-2.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                <span className="text-[11px] font-mono text-cyan-300 font-semibold uppercase tracking-wider">
+                  Rasmiy SSO Autentifikatsiya
+                </span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400">fentophid.vercel.app</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleFentophIdSso}
+              disabled={isLoading}
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm shadow-xl shadow-cyan-500/25 transition-all flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50 group"
+            >
+              <div className="w-6 h-6 rounded-lg bg-white/10 p-0.5 flex items-center justify-center">
+                <img src="/images/favicon.svg" alt="Fentoph ID" className="w-4 h-4 object-contain filter drop-shadow group-hover:scale-110 transition-transform" />
+              </div>
+              <span>Fentoph ID Bilan Kirish (1-Click SSO)</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <p className="text-[10px] text-center text-slate-400">
+              Barcha Fentoph servislari uchun yagona, xavfsiz va 2FA bilan himoyalangan hisob
+            </p>
+          </div>
+
+          {/* Divider */}
+          <div className="relative flex items-center justify-center my-2">
+            <div className="border-t border-slate-800 w-full"></div>
+            <span className="bg-[#090f1a] px-3 text-[10px] font-mono text-slate-500 uppercase tracking-widest whitespace-nowrap">
+              yoki login/parol orqali
+            </span>
+            <div className="border-t border-slate-800 w-full"></div>
+          </div>
+
           {/* Method Tabs: Fentoph ID vs Email/Username */}
           <div className="grid grid-cols-2 p-1 rounded-2xl bg-slate-950 border border-slate-800 gap-1 text-xs font-semibold">
             <button

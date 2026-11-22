@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { FentophUser, SavedItem, UserNotification, UserSession } from '../types';
 import { apiClient, getStoredToken, setStoredToken } from '../services/apiClient';
+import { initiateFentophIdLogin, exchangeFentophIdCode } from '../services/fentophIdAuth';
 
 interface RegisterInput {
   name: string;
@@ -19,6 +20,8 @@ interface AuthContextType {
   register: (input: RegisterInput) => Promise<boolean>;
   login: (emailOrUsername: string, pass: string, rememberMe?: boolean) => Promise<boolean>;
   loginWithGoogle: () => Promise<boolean>;
+  loginWithFentophId: () => Promise<void>;
+  handleFentophOAuthCallback: (code: string, state: string) => Promise<boolean>;
   loginAsDemoUser: (role?: 'user' | 'admin') => Promise<void>;
   verifyEmail: (code: string) => Promise<boolean>;
   requestPasswordReset: (email: string) => Promise<boolean>;
@@ -124,6 +127,63 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return true;
     } catch (err: any) {
       console.error('Google login failed:', err);
+      throw err;
+    }
+  };
+
+  const loginWithFentophId = async (): Promise<void> => {
+    await initiateFentophIdLogin();
+  };
+
+  const handleFentophOAuthCallback = async (code: string, state: string): Promise<boolean> => {
+    try {
+      const res = await exchangeFentophIdCode(code, state);
+      if (res.sessionToken) {
+        setStoredToken(res.sessionToken);
+      }
+      if (res.user) {
+        try {
+          await refreshUserData();
+        } catch {
+          setUser({
+            id: res.user.id,
+            fentophId: res.user.fentoph_id || res.user.fentophId,
+            fullName: res.user.fullName,
+            username: res.user.username,
+            email: res.user.email,
+            phone: '',
+            avatar: res.user.avatar || '/images/no_bg_favicon.png',
+            role: res.user.role === 'ADMIN' ? 'Administrator' : 'Foydalanuvchi',
+            emailVerified: true,
+            twoFactorEnabled: false,
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString(),
+            connectedServices: {
+              finilya: true,
+              eskibozor: true,
+              fsent: true,
+              phentist: true,
+              google: false,
+              github: false
+            },
+            preferences: {
+              theme: 'dark',
+              language: 'uz',
+              emailNotifications: true,
+              marketingEmails: false,
+              timezone: 'Asia/Tashkent'
+            },
+            apiKeys: [],
+            sessions: [],
+            activities: [],
+            savedItems: [],
+            notifications: []
+          });
+        }
+      }
+      return true;
+    } catch (err: any) {
+      console.error('Fentoph ID OAuth callback failed:', err);
       throw err;
     }
   };
@@ -354,6 +414,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         register,
         login,
         loginWithGoogle,
+        loginWithFentophId,
+        handleFentophOAuthCallback,
         loginAsDemoUser,
         verifyEmail,
         requestPasswordReset,
