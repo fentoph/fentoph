@@ -166,13 +166,13 @@ export const FounderPage: React.FC = () => {
               <div className="bg-[#0a0f1d] rounded-[22px] p-6 sm:p-8 space-y-6 border border-slate-700/80">
                 
                 {/* Photo / Avatar with Hologram Glow */}
-                <div className="relative mx-auto w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden border-2 border-cyan-400/50 shadow-2xl shadow-cyan-500/30 group">
+                <div className="relative mx-auto w-full max-w-[280px] aspect-[3/4] rounded-2xl overflow-hidden border-2 border-cyan-400/50 shadow-2xl shadow-cyan-500/30 group bg-slate-950">
                   <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80"
+                    src="/fentophforma.png"
                     alt="Aslbek Qo'ziboyev"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60"></div>
                 </div>
 
                 {/* Key Facts Matrix */}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
+import { useLanguage } from '../context/LanguageContext';
 import { APP_VERSION } from '../lib/version';
 import { 
   ShieldCheck, 
@@ -19,6 +20,7 @@ import {
 
 export const Footer: React.FC = () => {
   const { navigate } = useRouter();
+  const { t } = useLanguage();
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -46,10 +48,10 @@ export const Footer: React.FC = () => {
         <div className="pb-12 border-b border-slate-800/80 mb-12 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="space-y-2 max-w-xl text-center lg:text-left">
             <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight font-mono">
-              FENTOPH ENGINEERING BRIEF
+              {t('footer.brief')}
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Kompaniyaning eng so'nggi texnik yangiliklari, arxitektura tahlillari va xavfsizlik yangilanishlaridan birinchilardan bo'lib xabardor bo'ling.
+              {t('footer.briefDesc')}
             </p>
           </div>
 
@@ -59,7 +61,7 @@ export const Footer: React.FC = () => {
                 type="email"
                 value={newsletterEmail}
                 onChange={(e) => setNewsletterEmail(e.target.value)}
-                placeholder="Elektron pochta manzilingiz..."
+                placeholder={t('footer.emailPlaceholder')}
                 className="w-full bg-transparent px-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none"
                 required
               />
@@ -70,11 +72,11 @@ export const Footer: React.FC = () => {
                 {subscribed ? (
                   <>
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
-                    <span>A'zo bo'lindi</span>
+                    <span>{t('footer.subscribed')}</span>
                   </>
                 ) : (
                   <>
-                    <span>Obuna</span>
+                    <span>{t('footer.subscribe')}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </>
                 )}

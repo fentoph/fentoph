@@ -3,6 +3,7 @@ import { RouterProvider, useRouter } from './context/RouterContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { SEO } from './components/SEO';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -192,13 +193,15 @@ const AppContent: React.FC = () => {
 export default function App() {
   return (
     <ThemeProvider>
-      <ToastProvider>
-        <AuthProvider>
-          <RouterProvider>
-            <AppContent />
-          </RouterProvider>
-        </AuthProvider>
-      </ToastProvider>
+      <LanguageProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <RouterProvider>
+              <AppContent />
+            </RouterProvider>
+          </AuthProvider>
+        </ToastProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

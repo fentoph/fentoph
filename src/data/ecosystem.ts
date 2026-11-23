@@ -93,7 +93,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Aslbek Qo\'ziboyev',
     role: 'Asoschi va Bosh Dasturiy Arxitektor (Founder & Lead Architect)',
     bio: 'Fentoph ekotizimining asoschisi, taqsimlangan tizimlar, zamonaviy web texnologiyalari va kiberxavfsizlik muhandisi. Xiva, Xorazm.',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+    image: '/fentophforma.png',
     github: 'https://github.com/aslbek-qoziboyev'
   },
   {

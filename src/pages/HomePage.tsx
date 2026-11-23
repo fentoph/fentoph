@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
+import { useLanguage } from '../context/LanguageContext';
 import { PRODUCTS_DATA } from '../data/products';
 import { BLOG_POSTS } from '../data/blogs';
 import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolio';
@@ -35,6 +36,7 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = () => {
   const { navigate } = useRouter();
+  const { t } = useLanguage();
   const [activeSolutionTab, setActiveSolutionTab] = useState<'finance' | 'commerce' | 'security' | 'ai'>('finance');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activeModalProject, setActiveModalProject] = useState<PortfolioProject | null>(null);
@@ -82,11 +84,11 @@ export const HomePage: React.FC<HomePageProps> = () => {
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/70 shadow-lg mb-8 backdrop-blur-md">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
           <span className="text-[11px] font-mono tracking-wider uppercase text-cyan-300 font-semibold">
-            Fentoph 2026.4 • Kelajak Raqamli Ekotizimi
+            {t('hero.badge')}
           </span>
           <span className="text-slate-600">•</span>
-          <span className="text-[10px] font-mono text-emerald-400 font-semibold">
-            PRODUCTION READY
+          <span className="text-[10px] font-mono text-emerald-400 font-semibold uppercase">
+            FAOL (LIVE)
           </span>
         </div>
 
@@ -108,16 +110,16 @@ export const HomePage: React.FC<HomePageProps> = () => {
 
           <h1 className="mt-6 text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white font-mono leading-tight">
             <span className="bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-              FENTOPH GROUP
+              {t('hero.title')}
             </span>
           </h1>
 
           <p className="text-base sm:text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300 bg-clip-text text-transparent mt-3 max-w-2xl">
-            Kelajak Texnologiyalari va Intellektual Ekotizim Xoldingi
+            {t('hero.subtitle')}
           </p>
 
           <p className="text-sm sm:text-base text-slate-300 mt-3 font-normal max-w-2xl leading-relaxed">
-            Biznes va jamiyat uchun zamonaviy moliya operatsiyalari, intellektual onlayn savdo, harbiy darajada shifrlangan aloqa va avtonom AI agentlarini birlashtiruvchi milliy mustaqil platforma.
+            {t('hero.description')}
           </p>
         </div>
 
@@ -129,7 +131,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
             className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm shadow-xl shadow-cyan-500/25 transition-all active:scale-95 flex items-center gap-2 group"
           >
             <Layers className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-            <span>Portfolioni Ko'rish</span>
+            <span>{t('hero.viewPortfolio')}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
 
@@ -139,7 +141,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
             className="px-6 py-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/40 text-slate-200 hover:text-white font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center gap-2"
           >
             <UserCheck className="w-4 h-4 text-cyan-400" />
-            <span>Asoschi Haqida</span>
+            <span>{t('hero.meetFounder')}</span>
           </button>
 
           <button
@@ -148,7 +150,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
             className="px-6 py-3.5 rounded-2xl bg-slate-950/80 hover:bg-slate-900 border border-cyan-500/30 hover:border-cyan-400 text-cyan-300 font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center gap-2"
           >
             <KeyRound className="w-4 h-4 text-cyan-400" />
-            <span>Fentoph ID SSO</span>
+            <span>{t('hero.loginWithId')}</span>
           </button>
         </div>
 
@@ -358,37 +360,49 @@ export const HomePage: React.FC<HomePageProps> = () => {
           <div className="relative rounded-3xl bg-gradient-to-r from-blue-950/60 via-slate-900 to-indigo-950/60 border border-slate-800 p-8 sm:p-12 shadow-2xl overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 blur-[100px] pointer-events-none rounded-full"></div>
 
-            <div className="space-y-4 max-w-2xl text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
-                <UserCheck className="w-3.5 h-3.5" />
-                Fentoph Rahbariyati va Arxitekturasi
+            <div className="flex flex-col sm:flex-row items-center gap-6 max-w-3xl">
+              {/* Founder Avatar with Glow */}
+              <div 
+                onClick={() => navigate('/founder')}
+                className="w-28 h-36 sm:w-32 sm:h-40 rounded-2xl overflow-hidden border-2 border-cyan-400/50 shadow-xl shadow-cyan-500/20 flex-shrink-0 cursor-pointer group bg-slate-950"
+              >
+                <img
+                  src="/fentophforma.png"
+                  alt="Aslbek Qo'ziboyev"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
 
-              <h2 className="text-3xl sm:text-4xl font-black text-white font-mono">
-                Asoschi: Aslbek Qo'ziboyev
-              </h2>
+              <div className="space-y-3 text-center sm:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                  <UserCheck className="w-3.5 h-3.5" />
+                  {t('founder.badge')}
+                </div>
 
-              <p className="text-sm text-slate-300 leading-relaxed font-normal">
-                Fentoph ekotizimining asoschisi va bosh dasturiy arxitektori. Xiva shahrida tug'ilib, Finilya, Fsent va Phentist AI kabi yirik tizimlarni yaratishdan boshlab bugungi kunda 5 ta mustaqil mahsulotdan iborat texnologik xoldingga asos solgan.
-              </p>
+                <h2 className="text-2xl sm:text-3xl font-black text-white font-mono">
+                  Asoschi: {t('founder.name')}
+                </h2>
 
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs font-mono text-slate-400 pt-1">
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-cyan-400" /> Xiva, Xorazm, O'zbekiston
-                </span>
-                <span>•</span>
-                <span className="text-slate-300">Taqsimlangan Tizimlar & Kiberxavfsizlik</span>
-                <span>•</span>
-                <span className="text-cyan-400 font-bold">Zero-Knowledge Falsafasi</span>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                  {t('founder.desc')}
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs font-mono text-slate-400 pt-1">
+                  <span className="flex items-center gap-1.5 text-cyan-300">
+                    <MapPin className="w-3.5 h-3.5 text-cyan-400" /> Xiva, Xorazm, O'zbekiston
+                  </span>
+                  <span>•</span>
+                  <span className="text-slate-300">Taqsimlangan Tizimlar & AI</span>
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto flex-shrink-0">
               <button
                 onClick={() => navigate('/founder')}
                 className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm shadow-xl shadow-cyan-500/25 transition-all flex items-center justify-center gap-2"
               >
-                <span>Asoschi Sahifasiga O'tish</span>
+                <span>{t('founder.goToPage')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -396,7 +410,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
                 onClick={() => navigate('/about')}
                 className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-xs sm:text-sm transition-all"
               >
-                Kompaniya Tarixi
+                {t('founder.companyHistory')}
               </button>
             </div>
 
