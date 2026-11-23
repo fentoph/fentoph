@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
+import { APP_VERSION } from '../lib/version';
 import { 
   ShieldCheck, 
   Send, 
@@ -219,6 +220,16 @@ export const Footer: React.FC = () => {
             <h4 className="text-white font-bold text-xs uppercase tracking-wider font-mono">Kompaniya</h4>
             <ul className="space-y-2 text-xs">
               <li>
+                <button onClick={() => handleNav('/founder')} className="hover:text-cyan-400 transition-colors text-cyan-300 font-semibold flex items-center gap-1.5">
+                  <span>Asoschi (Founder)</span>
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNav('/portfolio')} className="hover:text-white transition-colors">
+                  Portfolio & Loyihalar
+                </button>
+              </li>
+              <li>
                 <button onClick={() => handleNav('/about')} className="hover:text-white transition-colors">
                   Kompaniya Haqida
                 </button>
@@ -291,7 +302,7 @@ export const Footer: React.FC = () => {
             </span>
             <span>•</span>
             <span className="flex items-center gap-1 font-mono text-cyan-300">
-              Built for the Future
+              v{APP_VERSION}
             </span>
           </div>
         </div>

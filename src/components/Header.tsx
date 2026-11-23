@@ -276,6 +276,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch, onOpenAi }) => {
 
             {/* Direct Links */}
             {[
+              { label: 'Portfolio', href: '/portfolio' },
+              { label: 'Asoschi', href: '/founder' },
               { label: 'Blog', href: '/blog' },
               { label: 'About', href: '/about' },
               { label: 'Careers', href: '/careers' },
@@ -447,6 +449,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch, onOpenAi }) => {
           <div className="grid grid-cols-2 gap-2">
             {[
               { label: 'Products', href: '/products' },
+              { label: 'Portfolio', href: '/portfolio' },
+              { label: 'Asoschi', href: '/founder' },
               { label: 'Solutions', href: '/solutions' },
               { label: 'Blog', href: '/blog' },
               { label: 'About', href: '/about' },

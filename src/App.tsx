@@ -30,6 +30,8 @@ import { FentophCallbackPage } from './pages/Auth/FentophCallbackPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AdminPage } from './pages/Admin/AdminPage';
 import { LegalPage } from './pages/Legal/LegalPage';
+import { FounderPage } from './pages/FounderPage';
+import { PortfolioPage } from './pages/PortfolioPage';
 
 import { Sparkles } from 'lucide-react';
 
@@ -117,6 +119,8 @@ const AppContent: React.FC = () => {
     if (currentPath === '/admin') return <AdminPage />;
 
     // General Company Pages
+    if (currentPath === '/founder' || currentPath === '/asoschi') return <FounderPage />;
+    if (currentPath === '/portfolio') return <PortfolioPage />;
     if (currentPath === '/about') return <AboutPage setActiveTab={() => {}} />;
     if (currentPath === '/careers') return <CareersPage />;
     if (currentPath === '/contact') return <ContactPage />;

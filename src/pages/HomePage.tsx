@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
 import { PRODUCTS_DATA } from '../data/products';
 import { BLOG_POSTS } from '../data/blogs';
+import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolio';
 import { 
-  Search, 
-  Sparkles, 
   ArrowRight, 
   ShieldCheck, 
   Wallet, 
@@ -21,44 +20,45 @@ import {
   Terminal,
   CheckCircle2,
   KeyRound,
-  Compass
+  ExternalLink,
+  MapPin,
+  Code2,
+  X,
+  Sparkles,
+  UserCheck
 } from 'lucide-react';
 
 interface HomePageProps {
-  onOpenSearchWithQuery: (q: string) => void;
-  onOpenAiWithPrompt: (p: string) => void;
+  onOpenSearchWithQuery?: (q: string) => void;
+  onOpenAiWithPrompt?: (p: string) => void;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ 
-  onOpenSearchWithQuery, 
-  onOpenAiWithPrompt 
-}) => {
+export const HomePage: React.FC<HomePageProps> = () => {
   const { navigate } = useRouter();
-  const [searchInput, setSearchInput] = useState('');
   const [activeSolutionTab, setActiveSolutionTab] = useState<'finance' | 'commerce' | 'security' | 'ai'>('finance');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [activeModalProject, setActiveModalProject] = useState<PortfolioProject | null>(null);
 
-  const SUGGESTED_QUERIES = [
-    { label: "Finilya moliyaviy tahlil", query: "Finilya moliya boshqaruvi va hisobotlar" },
-    { label: "EskiBozor AI narx monitoringi", query: "EskiBozor intellektual savdo platformasi" },
-    { label: "Fsent Signal shifrlash", query: "Fsent Double Ratchet xavfsiz messenjer" },
-    { label: "Phentist avtomatlashtirish", query: "Phentist AI agentlar va katta modellar" },
-    { label: "Fentoph ID xavfsizligi", query: "Fentoph ID yagona autentifikatsiya va SSO" }
+  const CATEGORIES = [
+    { id: 'all', label: 'Barcha Loyihalar' },
+    { id: 'fintech', label: 'FinTex va Moliya' },
+    { id: 'ecommerce', label: 'E-Commerce' },
+    { id: 'security', label: 'Kiberxavfsizlik & Aloqa' },
+    { id: 'ai', label: 'Sun\'iy Intellekt' },
+    { id: 'cloud', label: 'Yagona Bulut & SSO' },
   ];
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchInput.trim()) return;
-    onOpenSearchWithQuery(searchInput.trim());
-  };
+  const filteredProjects = selectedCategory === 'all'
+    ? PORTFOLIO_PROJECTS
+    : PORTFOLIO_PROJECTS.filter(p => p.category === selectedCategory);
 
-  const handleAskAi = () => {
-    const prompt = searchInput.trim() || 'Fentoph ekotizimida qanday mahsulotlar mavjud va ular biznesga qanday foyda beradi?';
-    onOpenAiWithPrompt(prompt);
-  };
-
-  const handlePromptClick = (query: string) => {
-    setSearchInput(query);
-    onOpenSearchWithQuery(query);
+  const scrollToPortfolio = () => {
+    const el = document.getElementById('portfolio-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/portfolio');
+    }
   };
 
   return (
@@ -66,26 +66,27 @@ export const HomePage: React.FC<HomePageProps> = ({
       
       {/* Dynamic Background Mesh & Glowing Orbs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[650px] pointer-events-none -z-10">
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[700px] h-[380px] bg-gradient-to-tr from-blue-600/20 via-cyan-500/15 to-indigo-600/20 blur-[130px] rounded-full animate-pulse-slow"></div>
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[750px] h-[380px] bg-gradient-to-tr from-blue-600/20 via-cyan-500/15 to-indigo-600/20 blur-[130px] rounded-full animate-pulse-slow"></div>
         <div className="absolute top-36 left-1/4 w-[350px] h-[250px] bg-purple-600/10 blur-[100px] rounded-full"></div>
         <div className="absolute top-48 right-1/4 w-[350px] h-[250px] bg-cyan-600/10 blur-[100px] rounded-full"></div>
       </div>
 
-      <div className="absolute inset-0 bg-grid-pattern opacity-60 pointer-events-none -z-10"></div>
+      <div className="absolute inset-0 bg-grid-pattern opacity-50 pointer-events-none -z-10"></div>
 
       {/* ========================================================
-          1. CENTERED HERO: CLEAN, GOOGLE-INSPIRED MINIMALIST CENTER
+          1. CLEAN, MODERN TECH HERO (SEARCHBAR REMOVED)
           ======================================================== */}
-      <section className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 pt-10 sm:pt-16 pb-20 max-w-5xl mx-auto w-full text-center relative z-10">
+      <section className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 pt-12 sm:pt-20 pb-20 max-w-5xl mx-auto w-full text-center relative z-10">
         
         {/* Modern Pill Badge */}
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 shadow-inner mb-6 backdrop-blur-md">
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/70 shadow-lg mb-8 backdrop-blur-md">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
           <span className="text-[11px] font-mono tracking-wider uppercase text-cyan-300 font-semibold">
             Fentoph 2026.4 • Kelajak Raqamli Ekotizimi
           </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
-            LIVE
+          <span className="text-slate-600">•</span>
+          <span className="text-[10px] font-mono text-emerald-400 font-semibold">
+            PRODUCTION READY
           </span>
         </div>
 
@@ -94,9 +95,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           className="relative mb-6 select-none flex flex-col items-center group cursor-pointer"
           onClick={() => navigate('/')}
         >
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-br from-blue-500 via-indigo-600 to-cyan-400 p-0.5 shadow-2xl shadow-cyan-500/20 group-hover:shadow-cyan-500/40 group-hover:scale-105 transition-all duration-300">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-br from-blue-500 via-indigo-600 to-cyan-400 p-0.5 shadow-2xl shadow-cyan-500/25 group-hover:shadow-cyan-500/50 group-hover:scale-105 transition-all duration-300">
             <div className="w-full h-full bg-[#080d16] rounded-[22px] flex items-center justify-center p-3.5 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/15 via-transparent to-blue-500/15 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <img 
                 src="/images/favicon.svg" 
                 alt="Fentoph Logo" 
@@ -105,421 +106,298 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
           </div>
 
-          <h1 className="mt-5 text-4xl sm:text-6xl font-black tracking-tight text-white font-mono flex items-center gap-2">
+          <h1 className="mt-6 text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white font-mono leading-tight">
             <span className="bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-              FENTOPH
+              FENTOPH GROUP
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 mt-2 font-normal max-w-xl leading-relaxed">
-            Moliya, intellektual savdo, harbiy darajada shifrlangan aloqa va AI agentlarini birlashtiruvchi global platforma.
+          <p className="text-base sm:text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300 bg-clip-text text-transparent mt-3 max-w-2xl">
+            Kelajak Texnologiyalari va Intellektual Ekotizim Xoldingi
+          </p>
+
+          <p className="text-sm sm:text-base text-slate-300 mt-3 font-normal max-w-2xl leading-relaxed">
+            Biznes va jamiyat uchun zamonaviy moliya operatsiyalari, intellektual onlayn savdo, harbiy darajada shifrlangan aloqa va avtonom AI agentlarini birlashtiruvchi milliy mustaqil platforma.
           </p>
         </div>
 
-        {/* Large Universal Search / AI Input Form */}
-        <div className="w-full max-w-2xl relative space-y-3 mt-2">
-          <form onSubmit={handleSearchSubmit} className="relative group">
-            {/* Ambient border glow on focus */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-600 rounded-2xl blur opacity-30 group-hover:opacity-70 group-focus-within:opacity-100 transition duration-300"></div>
-            
-            <div className="relative flex items-center bg-[#0a101d]/95 backdrop-blur-2xl border border-slate-700/80 rounded-2xl shadow-2xl px-4 sm:px-5 py-3.5 sm:py-4">
-              <Search className="w-5 h-5 text-cyan-400 mr-3.5 flex-shrink-0 animate-pulse" />
-              <input
-                type="text"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Fentoph bo'ylab qidiring, mahsulotlarni toping yoki AI-dan so'rang..."
-                className="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-400 focus:outline-none"
-              />
-              
-              <div className="flex items-center gap-2 flex-shrink-0 ml-3">
-                {searchInput && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchInput('')}
-                    className="text-xs text-slate-500 hover:text-slate-300 p-1"
-                  >
-                    Tozalash
-                  </button>
-                )}
-                <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800/80 border border-slate-700 text-slate-400">
-                  <kbd>Ctrl</kbd>+<kbd>K</kbd>
-                </span>
-              </div>
-            </div>
-          </form>
+        {/* Primary Call to Actions */}
+        <div className="flex flex-wrap items-center justify-center gap-3.5 pt-4 w-full max-w-md">
+          <button
+            type="button"
+            onClick={scrollToPortfolio}
+            className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm shadow-xl shadow-cyan-500/25 transition-all active:scale-95 flex items-center gap-2 group"
+          >
+            <Layers className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+            <span>Portfolioni Ko'rish</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
 
-          {/* Action Buttons: "Search Fentoph" & "AI Assistant" */}
-          <div className="flex items-center justify-center gap-3 pt-1">
-            <button
-              type="button"
-              onClick={handleSearchSubmit}
-              className="px-6 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 text-white font-semibold text-xs sm:text-sm hover:border-slate-500 transition-all shadow-md active:scale-95 flex items-center gap-1.5"
-            >
-              <Search className="w-4 h-4 text-slate-400" />
-              <span>Search Fentoph</span>
-            </button>
+          <button
+            type="button"
+            onClick={() => navigate('/founder')}
+            className="px-6 py-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/40 text-slate-200 hover:text-white font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center gap-2"
+          >
+            <UserCheck className="w-4 h-4 text-cyan-400" />
+            <span>Asoschi Haqida</span>
+          </button>
 
-            <button
-              type="button"
-              onClick={handleAskAi}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-cyan-500/25 transition-all active:scale-95 flex items-center gap-2 group"
-            >
-              <Sparkles className="w-4 h-4 text-cyan-200 group-hover:rotate-12 transition-transform" />
-              <span>AI Assistant</span>
-            </button>
-          </div>
-
-          {/* Prompt Suggestions Pills */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-1.5 text-xs">
-            <span className="text-[11px] font-mono text-slate-500 mr-1 flex items-center gap-1">
-              <Compass className="w-3 h-3" /> Tavsiya:
-            </span>
-            {SUGGESTED_QUERIES.map((item, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handlePromptClick(item.query)}
-                className="px-2.5 py-1 rounded-lg bg-slate-900/60 hover:bg-slate-800 border border-slate-800/80 hover:border-slate-700 text-slate-400 hover:text-cyan-300 text-[11px] font-medium transition-colors"
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* ========================================================
-            QUICK ACCESS TO CORE PRODUCTS (DOCK STYLE)
-            ======================================================== */}
-        <div className="mt-12 w-full max-w-3xl pt-8 border-t border-slate-800/80">
-          <div className="flex items-center justify-between mb-4 px-1">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-semibold flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-cyan-400" /> Fentoph Ekotizim Mahsulotlari
-            </span>
-            <button
-              onClick={() => navigate('/products')}
-              className="text-xs text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-1 group"
-            >
-              Katalog <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            {[
-              { 
-                id: 'finilya', 
-                name: 'Finilya', 
-                tagline: 'Aqlli Moliya', 
-                badge: 'Fintech', 
-                icon: <Wallet className="w-4 h-4 text-emerald-400" />,
-                gradient: 'from-emerald-500/20 to-teal-500/5'
-              },
-              { 
-                id: 'eskibozor', 
-                name: 'EskiBozor', 
-                tagline: 'AI Savdo Hubi', 
-                badge: 'Marketplace', 
-                icon: <ShoppingBag className="w-4 h-4 text-amber-400" />,
-                gradient: 'from-amber-500/20 to-orange-500/5'
-              },
-              { 
-                id: 'fsent', 
-                name: 'Fsent', 
-                tagline: 'Shifrlangan Aloqa', 
-                badge: 'Signal E2EE', 
-                icon: <MessageSquare className="w-4 h-4 text-blue-400" />,
-                gradient: 'from-blue-500/20 to-indigo-500/5'
-              },
-              { 
-                id: 'phentist', 
-                name: 'Phentist AI', 
-                tagline: 'Neyro Agentlar', 
-                badge: 'LLM Core', 
-                icon: <Cpu className="w-4 h-4 text-purple-400" />,
-                gradient: 'from-purple-500/20 to-fuchsia-500/5'
-              },
-              { 
-                id: 'fentoph-cloud', 
-                name: 'Fentoph ID', 
-                tagline: 'Yagona SSO', 
-                badge: 'Identity', 
-                icon: <ShieldCheck className="w-4 h-4 text-cyan-400" />,
-                gradient: 'from-cyan-500/20 to-blue-500/5'
-              },
-            ].map((p) => (
-              <button
-                key={p.id}
-                onClick={() => navigate(`/products/${p.id}`)}
-                className="group relative p-3.5 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/80 hover:from-slate-850 hover:to-slate-900 border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300 text-left flex flex-col justify-between shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-0.5"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className={`p-2 rounded-xl bg-slate-800/80 group-hover:scale-110 transition-transform ${p.gradient}`}>
-                    {p.icon}
-                  </div>
-                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-800/60 text-slate-400 border border-slate-700/50">
-                    {p.badge}
-                  </span>
-                </div>
-
-                <div>
-                  <div className="text-xs font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center justify-between">
-                    <span>{p.name}</span>
-                    <ChevronRight className="w-3 h-3 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all opacity-0 group-hover:opacity-100" />
-                  </div>
-                  <div className="text-[11px] text-slate-400 mt-0.5 truncate">{p.tagline}</div>
-                </div>
-              </button>
-            ))}
-          </div>
+          <button
+            type="button"
+            onClick={() => navigate('/login')}
+            className="px-6 py-3.5 rounded-2xl bg-slate-950/80 hover:bg-slate-900 border border-cyan-500/30 hover:border-cyan-400 text-cyan-300 font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center gap-2"
+          >
+            <KeyRound className="w-4 h-4 text-cyan-400" />
+            <span>Fentoph ID SSO</span>
+          </button>
         </div>
 
         {/* Live Trust & Status Metrics Ticker */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs text-slate-400 font-mono py-3 px-6 rounded-2xl bg-slate-900/40 border border-slate-800/60 backdrop-blur-md">
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-slate-400 font-mono py-3.5 px-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 backdrop-blur-md shadow-lg">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-white font-semibold">Yagona Fentoph ID</span> Ekotizimi
-          </span>
-          <span className="hidden sm:inline text-slate-700">•</span>
-          <span className="flex items-center gap-1.5">
-            <Activity className="w-3.5 h-3.5 text-blue-400" />
             <span className="text-white font-semibold">99.99%</span> Uptime SLA
           </span>
-          <span className="hidden sm:inline text-slate-700">•</span>
-          <span className="flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-white font-semibold">&lt;15ms</span> Global Kechikish
-          </span>
-          <span className="hidden sm:inline text-slate-700">•</span>
+          <span className="text-slate-700">•</span>
           <span className="flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-purple-400" />
-            <span>Zero-Knowledge Shifrlash</span>
+            <span className="text-slate-300">Zero-Knowledge Kriptografiya</span>
+          </span>
+          <span className="text-slate-700">•</span>
+          <span className="flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="text-slate-300">5+ Production Mahsulotlar</span>
+          </span>
+          <span className="text-slate-700">•</span>
+          <span className="flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="text-white font-semibold">Xiva, Xorazm</span> R&D Markazi
           </span>
         </div>
 
       </section>
 
       {/* ========================================================
-          2. BENTO GRID: INTERACTIVE ECOSYSTEM SHOWCASE
+          2. HAQIQIY PORTFOLIO (REAL PROJECTS SHOWCASE)
           ======================================================== */}
-      <section className="border-t border-slate-800/80 bg-[#070c16]/70 py-24 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto space-y-16">
+      <section id="portfolio-section" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-[#070c16]/80 relative z-10">
+        <div className="max-w-7xl mx-auto space-y-12">
           
-          {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
-              <Zap className="w-3.5 h-3.5" />
-              Kelajak Arxitekturasi
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                <Layers className="w-3.5 h-3.5" />
+                Fentoph Texnologik Portfoliyasi
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-mono">
+                Haqiqiy Mahsulotlar va Yechimlar
+              </h2>
+              <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-normal">
+                Fentoph jamoasi tomonidan noldan loyihalashtirilgan, real korxonalar va foydalanuvchilar xizmatidagi flagman tizimlar.
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Yagona Intellektual Ekotizim
-            </h2>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-              Fentoph shunchaki dasturlar to'plami emas. Bu o'zaro sinxron ishlovchi moliya, tijorat, sun'iy intellekt va xavfsiz aloqa poydevori.
-            </p>
+
+            <button
+              onClick={() => navigate('/portfolio')}
+              className="px-5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-slate-500 text-white font-semibold text-xs sm:text-sm transition-colors flex items-center gap-2 self-start md:self-auto shadow-md"
+            >
+              To'liq Portfolio Sahifasi <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
-          {/* High-Tech Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-6">
-            
-            {/* Bento Card 1: Finilya (Large 7 Cols) */}
-            <div 
-              onClick={() => navigate('/products/finilya')}
-              className="lg:col-span-7 cursor-pointer group rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950 border border-slate-800 hover:border-emerald-500/40 p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/10 relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 blur-[100px] pointer-events-none rounded-full"></div>
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 w-fit backdrop-blur-md">
+            {CATEGORIES.map(cat => {
+              const isActive = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    isActive
+                      ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                      <Wallet className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-black text-white group-hover:text-emerald-300 transition-colors">
-                        Finilya
-                      </h3>
-                      <span className="text-xs text-slate-400 font-mono">Aqlli Korporativ Moliya OS</span>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-mono border border-emerald-500/20">
-                    Fintech 2026
-                  </span>
-                </div>
-
-                <p className="text-sm text-slate-300 leading-relaxed max-w-xl mt-3">
-                  Kompaniyangiz byudjeti, kassa oqimlari, ko'p valyutali hisoblar va P&L tahlilini real vaqt rejimida avtomatlashtiring. Sun'iy intellekt moliyaviy anomaliyalarni bir zumda aniqlaydi.
-                </p>
-
-                {/* Mockup Financial Graph Widget */}
-                <div className="mt-6 p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 font-mono text-xs space-y-3">
-                  <div className="flex items-center justify-between text-slate-400 border-b border-slate-800/60 pb-2">
-                    <span className="flex items-center gap-1.5 text-white">
-                      <TrendingUp className="w-4 h-4 text-emerald-400" /> Avtomatik Kassa & P&L Balansi
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {filteredProjects.map((project) => (
+              <div
+                key={project.id}
+                className="rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-slate-700 overflow-hidden shadow-2xl transition-all duration-300 hover:-translate-y-1 flex flex-col group"
+              >
+                {/* Visual Image Banner */}
+                <div className="relative h-60 sm:h-64 w-full overflow-hidden bg-slate-950">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-[#0a0f1d]/40 to-transparent"></div>
+                  
+                  {/* Badges Overlay */}
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-900/90 text-white border border-slate-700 shadow-md">
+                      {project.badge}
                     </span>
-                    <span className="text-emerald-400 font-bold">Real-Vaqtda Sinxron</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <div className="text-[10px] text-slate-500">Bank & Kassa</div>
-                      <div className="text-white font-bold text-xs mt-0.5">Avto-Rekonsiliatsiya</div>
-                    </div>
-                    <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <div className="text-[10px] text-slate-500">Xarajatlar</div>
-                      <div className="text-white font-bold text-xs mt-0.5">Toifali Nazorat</div>
-                    </div>
-                    <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
-                      <div className="text-[10px] text-slate-500">Moliyaviy Audit</div>
-                      <div className="text-emerald-400 font-bold text-xs mt-0.5">AI Tahlil Faol</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-emerald-400">
-                <span>Finilya imkoniyatlarini ko'rish</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-              </div>
-            </div>
-
-            {/* Bento Card 2: Fsent Messenger (Medium 5 Cols) */}
-            <div 
-              onClick={() => navigate('/products/fsent')}
-              className="lg:col-span-5 cursor-pointer group rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950 border border-slate-800 hover:border-blue-500/40 p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] pointer-events-none rounded-full"></div>
-
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                      <MessageSquare className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-black text-white group-hover:text-blue-300 transition-colors">
-                        Fsent
-                      </h3>
-                      <span className="text-xs text-slate-400 font-mono">Shifrlangan Korporativ Aloqa</span>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-mono border border-blue-500/20">
-                    &lt;15ms Ping
-                  </span>
-                </div>
-
-                <p className="text-sm text-slate-300 leading-relaxed mt-3">
-                  Signal Double Ratchet algoritmi asosidagi ultra-tezkor messenjer. Xabarlar faqat suhbatdosh qurilmasida ochiladi, serverda metadata qolmaydi.
-                </p>
-
-                {/* Encryption Visual Snippet */}
-                <div className="mt-6 p-4 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-mono text-cyan-400">
-                    <span className="flex items-center gap-1.5">
-                      <Lock className="w-3.5 h-3.5" /> End-to-End Encrypted
+                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      ● {project.status}
                     </span>
-                    <span className="text-slate-500 text-[10px]">Curve25519</span>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-blue-600/15 border border-blue-500/20 text-xs text-slate-200">
-                    "Yangi shartnoma raqamli kaliti tasdiqlandi. Tranzaksiya xavfsiz."
+
+                  <div className="absolute top-4 right-4">
+                    <span className="px-2.5 py-1 rounded-xl text-[11px] font-mono bg-slate-900/80 text-slate-400 border border-slate-700">
+                      {project.year}
+                    </span>
+                  </div>
+
+                  {/* Title & Subtitle */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-2xl font-black text-white font-mono flex items-center justify-between">
+                      <span>{project.title}</span>
+                      <span className="text-xs font-normal text-cyan-400 font-mono">{project.categoryLabel}</span>
+                    </h3>
+                    <p className="text-xs text-slate-300 line-clamp-1 mt-0.5">{project.subtitle}</p>
                   </div>
                 </div>
+
+                {/* Project Details */}
+                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-5">
+                  <div className="space-y-4">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                      {project.overview}
+                    </p>
+
+                    {/* Architecture Feature Chips */}
+                    <div className="space-y-1.5 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80">
+                      <span className="text-[11px] font-mono text-cyan-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                        <Code2 className="w-3.5 h-3.5" /> Asosiy Texnik Xususiyatlar:
+                      </span>
+                      <ul className="space-y-1 text-xs text-slate-300">
+                        {project.architecture.slice(0, 2).map((arch, aIdx) => (
+                          <li key={aIdx} className="flex items-start gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                            <span>{arch}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Metrics Bar */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                      {project.metrics.map((m, mIdx) => (
+                        <div key={mIdx} className="p-2 rounded-xl bg-slate-800/40 border border-slate-800 text-center">
+                          <div className="text-xs sm:text-sm font-bold text-white font-mono">{m.value}</div>
+                          <div className="text-[10px] text-slate-400 leading-tight mt-0.5">{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Tech Stack Tags */}
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {project.techStack.map((tech, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-mono border border-slate-700/60"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
+                    <button
+                      onClick={() => setActiveModalProject(project)}
+                      className="text-xs text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 py-1"
+                    >
+                      Batafsil Case Study <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors border border-slate-700"
+                        >
+                          <span>Jonli Havola</span>
+                          <ExternalLink className="w-3 h-3 text-slate-400" />
+                        </a>
+                      )}
+                      <button
+                        onClick={() => navigate(`/products/${project.id}`)}
+                        className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white text-xs font-semibold transition-all shadow-md shadow-cyan-500/20"
+                      >
+                        Platforma
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================
+          3. FOUNDER SPOTLIGHT BANNER
+          ======================================================== */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-slate-950 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative rounded-3xl bg-gradient-to-r from-blue-950/60 via-slate-900 to-indigo-950/60 border border-slate-800 p-8 sm:p-12 shadow-2xl overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 blur-[100px] pointer-events-none rounded-full"></div>
+
+            <div className="space-y-4 max-w-2xl text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                <UserCheck className="w-3.5 h-3.5" />
+                Fentoph Rahbariyati va Arxitekturasi
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-blue-400">
-                <span>Fsent xavfsizlik arxitekturasi</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+              <h2 className="text-3xl sm:text-4xl font-black text-white font-mono">
+                Asoschi: Aslbek Qo'ziboyev
+              </h2>
+
+              <p className="text-sm text-slate-300 leading-relaxed font-normal">
+                Fentoph ekotizimining asoschisi va bosh dasturiy arxitektori. Xiva shahrida tug'ilib, Finilya, Fsent va Phentist AI kabi yirik tizimlarni yaratishdan boshlab bugungi kunda 5 ta mustaqil mahsulotdan iborat texnologik xoldingga asos solgan.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs font-mono text-slate-400 pt-1">
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-cyan-400" /> Xiva, Xorazm, O'zbekiston
+                </span>
+                <span>•</span>
+                <span className="text-slate-300">Taqsimlangan Tizimlar & Kiberxavfsizlik</span>
+                <span>•</span>
+                <span className="text-cyan-400 font-bold">Zero-Knowledge Falsafasi</span>
               </div>
             </div>
 
-            {/* Bento Card 3: EskiBozor (Medium 6 Cols) */}
-            <div 
-              onClick={() => navigate('/products/eskibozor')}
-              className="lg:col-span-6 cursor-pointer group rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950 border border-slate-800 hover:border-amber-500/40 p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-[80px] pointer-events-none rounded-full"></div>
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+              <button
+                onClick={() => navigate('/founder')}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm shadow-xl shadow-cyan-500/25 transition-all flex items-center justify-center gap-2"
+              >
+                <span>Asoschi Sahifasiga O'tish</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
 
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                      <ShoppingBag className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-black text-white group-hover:text-amber-300 transition-colors">
-                        EskiBozor
-                      </h3>
-                      <span className="text-xs text-slate-400 font-mono">AI Intellektual Savdo Platformasi</span>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-mono border border-amber-500/20">
-                    Market Intelligence
-                  </span>
-                </div>
-
-                <p className="text-sm text-slate-300 leading-relaxed mt-3">
-                  Savdo bozoridagi raqobatchilar narxlarini, talab dinamikasini va ombordagi qoldiqlarni AI orqali real vaqtda tahlil qilib, optimal narx strategiyasini shakllantiring.
-                </p>
-
-                <div className="mt-6 grid grid-cols-2 gap-3 text-xs font-mono">
-                  <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-                    <div className="text-slate-500 text-[10px]">AI Narx Dinamikasi</div>
-                    <div className="text-amber-400 font-bold mt-1">Raqobat monitoringi</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-                    <div className="text-slate-500 text-[10px]">Ombor Qoldiqlari</div>
-                    <div className="text-white font-bold mt-1">Avtomatik hisob</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-amber-400">
-                <span>EskiBozor savdo imkoniyatlari</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-              </div>
-            </div>
-
-            {/* Bento Card 4: Phentist AI (Medium 6 Cols) */}
-            <div 
-              onClick={() => navigate('/products/phentist')}
-              className="lg:col-span-6 cursor-pointer group rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950 border border-slate-800 hover:border-purple-500/40 p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 blur-[80px] pointer-events-none rounded-full"></div>
-
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
-                      <Cpu className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-black text-white group-hover:text-purple-300 transition-colors">
-                        Phentist AI
-                      </h3>
-                      <span className="text-xs text-slate-400 font-mono">Agentik Neyrotarmoqlar Laboratoriyasi</span>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-mono border border-purple-500/20">
-                    Autonomous LLM
-                  </span>
-                </div>
-
-                <p className="text-sm text-slate-300 leading-relaxed mt-3">
-                  Katta til modellari (LLM) va avtonom agentlar yordamida mijozlarga xizmat ko'rsatish, kod generatsiyasi va murakkab biznes zanjirlarini avtomatlashtiring.
-                </p>
-
-                <div className="mt-6 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 font-mono text-xs text-slate-300 flex items-center justify-between">
-                  <span className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-purple-400" /> AI Agent Pipeline
-                  </span>
-                  <span className="text-[11px] px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800/40">
-                    Active Executing
-                  </span>
-                </div>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-purple-400">
-                <span>Phentist arxitekturasi bilan tanishish</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-              </div>
+              <button
+                onClick={() => navigate('/about')}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-xs sm:text-sm transition-all"
+              >
+                Kompaniya Tarixi
+              </button>
             </div>
 
           </div>
@@ -527,9 +405,9 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================================================
-          3. SOLUTIONS INTERACTIVE SECTION
+          4. SOLUTIONS INTERACTIVE SECTION
           ======================================================== */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-slate-950/80 relative z-10">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-slate-950/90 relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -540,7 +418,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
                 Sizning Biznesingizga Mos Keladigan Texnologiya
               </h2>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-sm text-slate-400 leading-relaxed font-normal">
                 Kichik startaplardan tortib yirik korporativ bank va savdo tarmoqlarigacha bo'lgan har qanday talabga moslashtirilgan.
               </p>
             </div>
@@ -592,7 +470,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 {activeSolutionTab === 'ai' && 'Inson aralashuvisiz ishlaydigan mustaqil agentlar'}
               </h3>
 
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-300 leading-relaxed font-normal">
                 {activeSolutionTab === 'finance' && 'Fentoph Finilya orqali bank integratsiyalari, avtomatik to\'lovlar rekonsiliatsiyasi, kassa qoldiqlari va ko\'p filialli bizneslar uchun yagona moliyaviy panelni taqdim etadi.'}
                 {activeSolutionTab === 'commerce' && 'EskiBozor AI yordamida do\'koningizdagi tovarlar tavsifini avtomatik yaratadi, raqobatchilar narxlarini solishtiradi va mijozlarga individual chegirmalar taklif qiladi.'}
                 {activeSolutionTab === 'security' && 'Fsent va Fentoph Cloud SSO korporativ sirlar, fayllar va shaxsiy suhbatlarni xakerlik hujumlari, ruxsatsiz nusxalash va uchinchi shaxslar kuzatuvidan to\'liq himoyalaydi.'}
@@ -652,7 +530,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================================================
-          4. LATEST ENGINEERING INSIGHTS & BLOG
+          5. LATEST ENGINEERING INSIGHTS & BLOG
           ======================================================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-[#070c16]/70 relative z-10">
         <div className="max-w-7xl mx-auto space-y-12">
@@ -722,7 +600,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================================================
-          5. CALL TO ACTION: READY TO JOIN FENTOPH
+          6. CALL TO ACTION: READY TO JOIN FENTOPH
           ======================================================== */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800/80 bg-slate-950 relative z-10">
         <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-r from-blue-900/40 via-indigo-900/40 to-cyan-900/40 border border-slate-700/80 p-8 sm:p-14 text-center space-y-6 relative overflow-hidden shadow-2xl">
@@ -733,7 +611,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             Yagona Fentoph ID bilan boshlang
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-mono">
             Kelajak texnologiyalariga bugun qo'shiling
           </h2>
 
@@ -750,14 +628,105 @@ export const HomePage: React.FC<HomePageProps> = ({
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
-              onClick={() => navigate('/products')}
+              onClick={() => navigate('/founder')}
               className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-xs sm:text-sm transition-all"
             >
-              Mahsulotlar bilan tanishish
+              Asoschi bilan tanishish
             </button>
           </div>
         </div>
       </section>
+
+      {/* Case Study Modal */}
+      {activeModalProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-3xl rounded-3xl bg-[#0a0f1d] border border-slate-700 p-6 sm:p-8 max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl">
+            
+            <button
+              onClick={() => setActiveModalProject(null)}
+              className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="space-y-1">
+              <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">
+                {activeModalProject.badge} • Case Study
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-white font-mono">
+                {activeModalProject.title}
+              </h2>
+              <p className="text-sm text-slate-300">{activeModalProject.tagline}</p>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden border border-slate-800 h-64 sm:h-80">
+              <img
+                src={activeModalProject.image}
+                alt={activeModalProject.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/20 space-y-1.5">
+                <span className="text-xs font-bold text-rose-400 uppercase tracking-wider">Muammo & Ehtiyoj</span>
+                <p className="text-xs text-slate-300 leading-relaxed">{activeModalProject.problem}</p>
+              </div>
+              <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/20 space-y-1.5">
+                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Fentoph Yechimi</span>
+                <p className="text-xs text-slate-300 leading-relaxed">{activeModalProject.solution}</p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-sm font-bold text-white font-mono uppercase tracking-wider">
+                To'liq Arxitektura Tafsilotlari:
+              </h4>
+              <ul className="space-y-2">
+                {activeModalProject.architecture.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <button
+                onClick={() => setActiveModalProject(null)}
+                className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold"
+              >
+                Yopish
+              </button>
+
+              <div className="flex items-center gap-2">
+                {activeModalProject.liveUrl && (
+                  <a
+                    href={activeModalProject.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold flex items-center gap-2 border border-slate-700"
+                  >
+                    <span>Jonli Havola</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                  </a>
+                )}
+                <button
+                  onClick={() => {
+                    setActiveModalProject(null);
+                    navigate(`/products/${activeModalProject.id}`);
+                  }}
+                  className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs"
+                >
+                  Mahsulot Sahifasi
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

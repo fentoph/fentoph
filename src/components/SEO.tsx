@@ -10,6 +10,12 @@ export const SEO: React.FC = () => {
 
     if (currentPath === '/') {
       title = 'Fentoph - Kelajak Texnologiyalari va Raqamli Ekotizimi';
+    } else if (currentPath === '/founder' || currentPath === '/asoschi') {
+      title = 'Asoschi - Aslbek Qo\'ziboyev | Fentoph Group';
+      description = "Fentoph asoschisi va bosh tizim arxitektori Aslbek Qo'ziboyev haqida. Falsafa, muhandislik qarashlari, Xiva R&D markazi va loyihalar.";
+    } else if (currentPath === '/portfolio') {
+      title = 'Portfolio - Fentoph Texnologik Loyihalari va Mahsulotlari';
+      description = "Fentoph tomonidan ishlab chiqilgan Finilya, EskiBozor, Fsent, Phentist AI va Fentoph ID loyihalari arxitekturasi va portfoliyasi.";
     } else if (currentPath.startsWith('/products')) {
       if (routeInfo.params.id) {
         title = `${routeInfo.params.id.toUpperCase()} - Fentoph Mahsuloti`;
