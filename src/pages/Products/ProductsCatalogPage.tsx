@@ -172,13 +172,13 @@ export const ProductsCatalogPage: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate('/register')}
+        <a
+          href="https://fentophid.vercel.app/signup"
           className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm whitespace-nowrap transition-all shadow-lg shadow-cyan-500/20 active:scale-95 flex items-center gap-2"
         >
           <ShieldCheck className="w-4 h-4" />
           <span>Fentoph ID ochish</span>
-        </button>
+        </a>
       </div>
 
     </div>

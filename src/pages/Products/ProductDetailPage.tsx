@@ -59,13 +59,13 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ productId 
           </p>
 
           <div className="pt-4 flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => navigate('/register')}
+            <a
+              href="https://fentophid.vercel.app/signup"
               className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-cyan-500/20 hover:scale-[1.02] transition-all flex items-center gap-2"
             >
               <ShieldCheck className="w-4 h-4" />
-              Try now / Bepul Boshlash
-            </button>
+              Fentoph ID Bilan Boshlash
+            </a>
 
             <button
               onClick={() => navigate(`/docs/${product.docsSlug}`)}
@@ -188,16 +188,16 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ productId 
                   </ul>
                 </div>
 
-                <button
-                  onClick={() => navigate('/register')}
-                  className={`w-full py-2.5 rounded-xl font-semibold text-xs transition-colors ${
+                <a
+                  href="https://fentophid.vercel.app/signup"
+                  className={`w-full py-2.5 rounded-xl font-semibold text-xs transition-colors flex items-center justify-center ${
                     plan.highlight
                       ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25'
                       : 'bg-slate-800 hover:bg-slate-700 text-white'
                   }`}
                 >
-                  Tanlash va Boshlash
-                </button>
+                  Fentoph ID Bilan Boshlash
+                </a>
               </div>
             ))}
           </div>

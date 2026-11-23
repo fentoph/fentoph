@@ -634,13 +634,13 @@ export const HomePage: React.FC<HomePageProps> = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-            <button
-              onClick={() => navigate('/register')}
+            <a
+              href="https://fentophid.vercel.app/signup"
               className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs sm:text-sm shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2"
             >
-              <span>Fentoph Hisobini Yaratish</span>
+              <span>Yangi Fentoph ID Ochish</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </a>
             <button
               onClick={() => navigate('/founder')}
               className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-xs sm:text-sm transition-all"

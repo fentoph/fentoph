@@ -384,12 +384,12 @@ export const LoginPage: React.FC = () => {
         {/* Register CTA */}
         <div className="text-center text-xs text-slate-400">
           Fentoph hisobingiz yo'qmi?{' '}
-          <button
-            onClick={() => navigate('/register')}
+          <a
+            href="https://fentophid.vercel.app/signup"
             className="text-cyan-400 font-bold hover:underline"
           >
-            Yangi Fentoph ID yarating
-          </button>
+            Yangi Fentoph ID ochish
+          </a>
         </div>
 
         {/* Security Assurance Badge */}
