@@ -66,6 +66,9 @@ export const SEO: React.FC = () => {
 
     document.title = title;
 
+    const isFounderPage = currentPath === '/founder' || currentPath === '/asoschi';
+    const ogImageUrl = `${window.location.origin}${isFounderPage ? '/images/og-founder.png' : '/images/og-card.png'}`;
+
     // Update meta description
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
@@ -76,8 +79,24 @@ export const SEO: React.FC = () => {
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) ogTitle.setAttribute('content', title);
 
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', description);
+
     const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) ogImage.setAttribute('content', ogImageUrl);
+
+    // Update Twitter tags dynamically
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twitterTitle) twitterTitle.setAttribute('content', title);
+
+    const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twitterDesc) twitterDesc.setAttribute('content', description);
+
+    const twitterImage = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImage) twitterImage.setAttribute('content', ogImageUrl);
 
     // Update Canonical URL dynamically
     let canonical = document.querySelector('link[rel="canonical"]');

@@ -23,31 +23,37 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#050811" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / Telegram / LinkedIn -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="uz_UZ" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="ru_RU" />
     <meta property="og:url" content="https://fentoph.vercel.app/" />
     <meta property="og:site_name" content="Fentoph" />
     <meta property="og:title" content="Fentoph - Kelajak Texnologiyalari va Raqamli Ekotizimi" />
-    <meta property="og:description" content="Fentoph - FinTech, intellektual savdo, E2EE xavfsiz aloqa va O'zbek tili LLM texnologiyalarining yagona raqamli makoni." />
-    <meta property="og:image" content="https://fentoph.vercel.app/images/no_bg_logo.png" />
+    <meta property="og:description" content="Fentoph - FinTech (Finilya), aqlli savdo (EskiBozor), E2EE xavfsiz aloqa (Fsent) va O'zbek tili LLM (Phentist) texnologiyalarining yagona raqamli ekotizimi." />
+    <meta property="og:image" content="https://fentoph.vercel.app/images/og-card.png" />
+    <meta property="og:image:secure_url" content="https://fentoph.vercel.app/images/og-card.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Fentoph - Kelajak Texnologiyalari va Raqamli Ekotizimi (Xiva, O'zbekiston)" />
 
-    <!-- Twitter Cards -->
+    <!-- Twitter Cards (X, Telegram, Discord, WhatsApp) -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@fentoph" />
     <meta name="twitter:creator" content="@aslbek_qoziboyev" />
     <meta name="twitter:title" content="Fentoph - Kelajak Texnologiyalari va Raqamli Ekotizimi" />
-    <meta name="twitter:description" content="Fentoph - FinTech, intellektual savdo va E2EE aloqa ekotizimi." />
-    <meta name="twitter:image" content="https://fentoph.vercel.app/images/no_bg_logo.png" />
+    <meta name="twitter:description" content="FinTech, intellektual savdo, E2EE xavfsiz aloqa va O'zbek tili sun'iy intellekti ekotizimi." />
+    <meta name="twitter:image" content="https://fentoph.vercel.app/images/og-card.png" />
+    <meta name="twitter:image:alt" content="Fentoph Global Ecosystem Preview" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Schema.org JSON-LD Structured Data for Google Rich Results -->
+    <!-- Schema.org JSON-LD Structured Data for Google Rich Results & Knowledge Graph -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -56,15 +62,20 @@
           "@type": "Corporation",
           "@id": "https://fentoph.vercel.app/#organization",
           "name": "Fentoph",
+          "alternateName": "Fentoph Technologies",
+          "legalName": "Fentoph Engineering Group",
           "url": "https://fentoph.vercel.app",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://fentoph.vercel.app/images/no_bg_logo.png"
+            "url": "https://fentoph.vercel.app/images/og-card.png",
+            "width": 1200,
+            "height": 630
           },
+          "image": "https://fentoph.vercel.app/images/og-card.png",
+          "description": "Fentoph - Moliya, savdo, sun'iy intellekt va E2EE aloqa texnologiyalarini birlashtiruvchi global intellektual ekotizim.",
+          "slogan": "Kelajak Texnologiyalari va Yagona Raqamli Ekotizimi",
           "founder": {
-            "@type": "Person",
-            "name": "Aslbek Qo'ziboyev",
-            "jobTitle": "Founder & Lead Software Architect"
+            "@id": "https://fentoph.vercel.app/#founder"
           },
           "foundingLocation": {
             "@type": "Place",
@@ -77,7 +88,34 @@
             "addressCountry": "UZ"
           },
           "sameAs": [
-            "https://github.com/fentoph"
+            "https://github.com/fentoph",
+            "https://fentophid.vercel.app"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://fentoph.vercel.app/#founder",
+          "name": "Aslbek Qo'ziboyev",
+          "givenName": "Aslbek",
+          "familyName": "Qo'ziboyev",
+          "jobTitle": "Founder & Lead Software Architect",
+          "worksFor": {
+            "@id": "https://fentoph.vercel.app/#organization"
+          },
+          "url": "https://fentoph.vercel.app/founder",
+          "image": "https://fentoph.vercel.app/fentophforma.png",
+          "description": "Fentoph texnologik ekotizimi asoschisi, Xiva R&D muhandislik markazi rahbari.",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Xiva, Xorazm, O'zbekiston"
+          },
+          "nationality": "Uzbekistan",
+          "knowsAbout": [
+            "Software Architecture",
+            "Zero-Trust Cybersecurity",
+            "FinTech Engineering",
+            "Artificial Intelligence & LLMs",
+            "Distributed Systems"
           ]
         },
         {
@@ -94,6 +132,54 @@
             "target": "https://fentoph.vercel.app/?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://fentoph.vercel.app/#ecosystem-products",
+          "name": "Fentoph Ekotizim Mahsulotlari",
+          "description": "Fentoph tomonidan ishlab chiqilgan va boshqariladigan mustaqil intellektual platformalar.",
+          "itemListElement": [
+            {
+              "@type": "SoftwareApplication",
+              "position": 1,
+              "name": "Finilya",
+              "applicationCategory": "FinanceApplication",
+              "operatingSystem": "Web, iOS, Android",
+              "description": "Zamonaviy raqamli investitsiya, likvidlik va avtomatlashtirilgan moliyaviy hisob-kitoblar platformasi."
+            },
+            {
+              "@type": "SoftwareApplication",
+              "position": 2,
+              "name": "EskiBozor",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web, iOS, Android",
+              "description": "An'anaviy qadriyatlar va zamonaviy intellektual savdo algoritmlarini birlashtiruvchi B2B/B2C savdo maydonchasi."
+            },
+            {
+              "@type": "SoftwareApplication",
+              "position": 3,
+              "name": "Fsent",
+              "applicationCategory": "CommunicationApplication",
+              "operatingSystem": "Web, iOS, Android, Desktop",
+              "description": "Kvant darajasida himoyalangan, shifrlangan (E2EE) korporativ va shaxsiy xabar almashish ekotizimi."
+            },
+            {
+              "@type": "SoftwareApplication",
+              "position": 4,
+              "name": "Phentist",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Cloud API, Web",
+              "description": "O'zbek tili semantikasi va murakkab kontekstini chuqur tushunuvchi xususiy Sun'iy Intellekt va LLM tahlil modeli."
+            },
+            {
+              "@type": "SoftwareApplication",
+              "position": 5,
+              "name": "Fentoph ID",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Cloud, OAuth 2.0 PKCE",
+              "description": "Barcha Fentoph va hamkor servislarga yagona xavfsiz kirish kaliti (@fmail.com)."
+            }
+          ]
         }
       ]
     }

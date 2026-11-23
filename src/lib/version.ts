@@ -7,15 +7,15 @@
  * - a (yy): Chiqqan yil (26 = 2026)
  */
 
-export const APP_VERSION = '5.2.11.26';
+export const APP_VERSION = '5.3.11.26';
 
 export const VERSION_METADATA = {
   version: APP_VERSION,
   fix: 5,
-  feat: 2,
+  feat: 3,
   month: 11,
   year: 26,
-  releaseName: 'Titanium RFC 7636 PKCE Zero-Trust SSO Edition',
+  releaseName: 'Titanium High-Resolution OpenGraph & Schema.org Rich Results Edition',
   releaseDate: '2026-11-23',
-  tag: 'v5.2.11.26'
+  tag: 'v5.3.11.26'
 };
