@@ -229,5 +229,23 @@ export const apiClient = {
 
   // Search
   search: (query: string) =>
-    request<{ results: any[] }>(`/search?q=${encodeURIComponent(query)}`)
+    request<{ results: any[] }>(`/search?q=${encodeURIComponent(query)}`),
+
+  // Corporate Fentoph ID Guarded Authentication
+  verifyCorporateFentophId: async (identifier: string, password: string) => {
+    const res = await fetch('https://fentophid.vercel.app/api/auth/verify-corporate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-fentoph-portal-key': 'fentoph_secret_portal_key_2026',
+      },
+      body: JSON.stringify({ identifier, password }),
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data?.error || `Avtorizatsiya xatosi (${res.status})`);
+    }
+    return data;
+  }
 };

@@ -7,15 +7,15 @@
  * - a (yy): Chiqqan yil (26 = 2026)
  */
 
-export const APP_VERSION = '3.2.11.26';
+export const APP_VERSION = '4.2.11.26';
 
 export const VERSION_METADATA = {
   version: APP_VERSION,
-  fix: 3,
+  fix: 4,
   feat: 2,
   month: 11,
   year: 26,
-  releaseName: 'Titanium SSO Signup Redirect Edition',
+  releaseName: 'Titanium Guarded Corporate Fmail ID Edition',
   releaseDate: '2026-11-23',
-  tag: 'v3.2.11.26'
+  tag: 'v4.2.11.26'
 };

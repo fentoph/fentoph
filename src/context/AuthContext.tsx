@@ -19,6 +19,7 @@ interface AuthContextType {
   pendingVerificationEmail: string | null;
   register: (input: RegisterInput) => Promise<boolean>;
   login: (emailOrUsername: string, pass: string, rememberMe?: boolean) => Promise<boolean>;
+  loginWithCorporateFentophId: (identifier: string, pass: string) => Promise<boolean>;
   loginWithGoogle: () => Promise<boolean>;
   loginWithFentophId: () => Promise<void>;
   handleFentophOAuthCallback: (code: string, state: string) => Promise<boolean>;
@@ -75,7 +76,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
       }
     } catch {
-      // Token invalid or expired
+      // Check if session user is cached (corporate portal login or client session)
+      const cached = localStorage.getItem('fentoph_session_user');
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          setUser(prev => prev || {
+            id: parsed.id || `fp_${Date.now()}`,
+            fentophId: parsed.fentophId || `${parsed.username}@fmail.com`,
+            fullName: parsed.fullName || parsed.username || 'Fentoph Foydalanuvchisi',
+            username: parsed.username || 'fentoph_user',
+            email: parsed.email || `${parsed.username}@fmail.com`,
+            phone: parsed.phone || '',
+            avatar: parsed.avatar || '/images/no_bg_favicon.png',
+            role: parsed.role === 'Administrator' ? 'Administrator' : 'Foydalanuvchi',
+            emailVerified: true,
+            twoFactorEnabled: false,
+            createdAt: parsed.createdAt || new Date().toISOString(),
+            lastLogin: new Date().toISOString(),
+            connectedServices: {
+              finilya: true,
+              eskibozor: true,
+              fsent: true,
+              phentist: true,
+              google: false,
+              github: false
+            },
+            preferences: {
+              theme: 'dark',
+              language: 'uz',
+              emailNotifications: true,
+              marketingEmails: false,
+              timezone: 'Asia/Tashkent'
+            },
+            apiKeys: [],
+            sessions: [],
+            activities: [],
+            savedItems: JSON.parse(localStorage.getItem('fentoph_saved_items') || '[]'),
+            notifications: []
+          });
+          return;
+        } catch {}
+      }
       setStoredToken(null);
       setUser(null);
     } finally {
@@ -103,7 +145,67 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const loginWithCorporateFentophId = async (identifier: string, pass: string): Promise<boolean> => {
+    try {
+      const res = await apiClient.verifyCorporateFentophId(identifier, pass);
+      if (res && res.success && res.user) {
+        const userData: FentophUser = {
+          id: res.user.id || `fp_${Date.now()}`,
+          fentophId: res.user.fentophId || `${res.user.username}@fmail.com`,
+          fullName: res.user.fullName || res.user.username,
+          username: res.user.username,
+          email: res.user.email || `${res.user.username}@fmail.com`,
+          phone: '',
+          avatar: res.user.avatar || '/images/no_bg_favicon.png',
+          role: res.user.role === 'Administrator' ? 'Administrator' : 'Foydalanuvchi',
+          emailVerified: true,
+          twoFactorEnabled: false,
+          createdAt: new Date().toISOString(),
+          lastLogin: new Date().toISOString(),
+          connectedServices: {
+            finilya: true,
+            eskibozor: true,
+            fsent: true,
+            phentist: true,
+            google: false,
+            github: false
+          },
+          preferences: {
+            theme: 'dark',
+            language: 'uz',
+            emailNotifications: true,
+            marketingEmails: false,
+            timezone: 'Asia/Tashkent'
+          },
+          apiKeys: [],
+          sessions: [],
+          activities: [],
+          savedItems: JSON.parse(localStorage.getItem('fentoph_saved_items') || '[]'),
+          notifications: []
+        };
+
+        setUser(userData);
+        localStorage.setItem('fentoph_session_user', JSON.stringify(userData));
+        return true;
+      }
+      return false;
+    } catch (err: any) {
+      console.error('Corporate verify login failed:', err);
+      throw err;
+    }
+  };
+
   const login = async (emailOrUsername: string, pass: string, _rememberMe = true): Promise<boolean> => {
+    if (emailOrUsername.toLowerCase().includes('@fmail.com') || emailOrUsername.toLowerCase().includes('@')) {
+      try {
+        const corporateOk = await loginWithCorporateFentophId(emailOrUsername, pass);
+        if (corporateOk) return true;
+      } catch (corporateErr) {
+        // If corporate verify specifically errored with 401/400, throw or continue to internal login
+        console.warn('Corporate verify failed, falling back to local auth:', corporateErr);
+      }
+    }
+
     try {
       const res = await apiClient.login(emailOrUsername, pass);
       if (res.sessionToken) {
@@ -112,6 +214,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await refreshUserData();
       return true;
     } catch (err: any) {
+      // Fallback: try corporate verify if not attempted yet
+      try {
+        const corporateOk = await loginWithCorporateFentophId(emailOrUsername, pass);
+        if (corporateOk) return true;
+      } catch {}
       console.error('Login failed:', err);
       throw err;
     }
@@ -413,6 +520,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         pendingVerificationEmail,
         register,
         login,
+        loginWithCorporateFentophId,
         loginWithGoogle,
         loginWithFentophId,
         handleFentophOAuthCallback,

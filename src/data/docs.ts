@@ -64,7 +64,7 @@ async function authMiddleware(req, res, next) {
     const userPayload = await verifyFentophToken(token, {
       clientId: process.env.FENTOPH_CLIENT_ID
     });
-    req.user = userPayload; // { fentophId: 'FP-894210', email: 'user@domain.uz' }
+    req.user = userPayload; // { fentophId: 'user@fmail.com', email: 'user@fmail.com' }
     next();
   } catch (err) {
     return res.status(403).json({ error: 'Yaroqsiz token' });

@@ -76,7 +76,7 @@ export interface SavedItem {
 
 export interface FentophUser {
   id: string;
-  fentophId: string; // e.g. FP-894210
+  fentophId: string; // e.g. username@fmail.com
   fullName: string;
   username: string;
   email: string;

@@ -134,7 +134,7 @@ export async function exchangeFentophIdCode(code: string, returnedState: string)
 
   const formattedUser = {
     id: profile.sub || `fp_${Date.now()}`,
-    fentoph_id: profile.username ? `FP-${profile.username}` : `FP-${String(profile.sub).slice(0, 6)}`,
+    fentoph_id: profile.username ? `${profile.username}@fmail.com` : `${String(profile.sub).slice(0, 8)}@fmail.com`,
     email: profile.email || `${profile.username}@fmail.com`,
     username: profile.username || String(profile.email || '').split('@')[0],
     fullName: profile.name || `${profile.firstName || ''} ${profile.lastName || ''}`.trim() || profile.username,

@@ -19,7 +19,7 @@ import {
 
 export const LoginPage: React.FC = () => {
   const { navigate } = useRouter();
-  const { login, loginWithGoogle, loginWithFentophId, loginAsDemoUser } = useAuth();
+  const { login, loginWithCorporateFentophId, loginWithGoogle, loginWithFentophId, loginAsDemoUser } = useAuth();
   const toast = useToast();
 
   const [loginMethod, setLoginMethod] = useState<'fentoph_id' | 'email_username'>('fentoph_id');
@@ -41,18 +41,18 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const activeIdentifier = loginMethod === 'fentoph_id' 
-    ? (fentophIdInput.startsWith('FP-') ? fentophIdInput : `FP-${fentophIdInput.replace(/[^0-9]/g, '')}`)
-    : emailOrUsername;
+  const normalizedFentophId = fentophIdInput.includes('@')
+    ? fentophIdInput.trim().toLowerCase()
+    : `${fentophIdInput.trim().toLowerCase()}@fmail.com`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const identifierToSubmit = loginMethod === 'fentoph_id' ? activeIdentifier : emailOrUsername;
+    const identifierToSubmit = loginMethod === 'fentoph_id' ? normalizedFentophId : emailOrUsername;
 
     if (!identifierToSubmit.trim() || !password) {
       setErrorMsg(loginMethod === 'fentoph_id' 
-        ? "Iltimos, Fentoph ID raqamingiz va parolingizni kiriting." 
+        ? "Iltimos, Fentoph ID ({usermail}@fmail.com) va parolingizni kiriting." 
         : "Iltimos, email/username va parolingizni kiriting.");
       return;
     }
@@ -61,7 +61,13 @@ export const LoginPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ok = await login(identifierToSubmit.trim(), password, rememberMe);
+      let ok = false;
+      if (loginMethod === 'fentoph_id') {
+        ok = await loginWithCorporateFentophId(identifierToSubmit.trim(), password);
+      } else {
+        ok = await login(identifierToSubmit.trim(), password, rememberMe);
+      }
+
       if (ok) {
         toast.success("Fentoph hisobingizga muvaffaqiyatli kirdingiz!");
         navigate('/dashboard');
@@ -70,8 +76,8 @@ export const LoginPage: React.FC = () => {
           ? "Kiritilgan Fentoph ID yoki parol noto'g'ri." 
           : "Elektron pochta/username yoki parol noto'g'ri.");
       }
-    } catch {
-      setErrorMsg("Tizimga kirishda xatolik yuz berdi. Qaytadan urinib ko'ring.");
+    } catch (err: any) {
+      setErrorMsg(err?.message || "Tizimga kirishda xatolik yuz berdi. Qaytadan urinib ko'ring.");
     } finally {
       setIsLoading(false);
     }
@@ -241,29 +247,31 @@ export const LoginPage: React.FC = () => {
             {loginMethod === 'fentoph_id' ? (
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Fentoph ID Raqamingiz:
+                  Fentoph ID (Fmail hisobingiz):
                 </label>
                 <div className="relative flex items-center bg-slate-950 border border-slate-800 rounded-xl overflow-hidden focus-within:border-cyan-500 transition-colors">
-                  <span className="px-3.5 py-2.5 bg-slate-900 border-r border-slate-800 text-cyan-400 font-mono text-xs font-bold select-none">
-                    FP-
-                  </span>
+                  <div className="pl-3.5 pr-2 text-cyan-400">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
                   <input
                     type="text"
                     required
-                    value={fentophIdInput.replace(/^FP-/i, '')}
-                    onChange={(e) => {
-                      const val = e.target.value.replace(/[^0-9]/g, '').slice(0, 8);
-                      setFentophIdInput(`FP-${val}`);
-                    }}
-                    placeholder="894210"
-                    className="w-full px-3 py-2.5 bg-transparent text-sm text-white placeholder-slate-600 focus:outline-none font-mono tracking-wider"
+                    value={fentophIdInput}
+                    onChange={(e) => setFentophIdInput(e.target.value.toLowerCase().trim())}
+                    placeholder="foydalanuvchi yoki foydalanuvchi@fmail.com"
+                    className="w-full px-2 py-2.5 bg-transparent text-sm text-white placeholder-slate-600 focus:outline-none font-mono tracking-wider"
                   />
+                  {!fentophIdInput.includes('@') && fentophIdInput.length > 0 && (
+                    <span className="pr-2 text-xs font-mono text-cyan-400 select-none whitespace-nowrap">
+                      @fmail.com
+                    </span>
+                  )}
                   <div className="pr-3 text-[10px] font-mono text-slate-500 uppercase select-none">
                     SSO
                   </div>
                 </div>
                 <p className="text-[11px] text-slate-500 mt-1">
-                  Masalan: <span className="font-mono text-cyan-400">FP-894210</span> (Profil yoki ro'yxatdan o'tganda berilgan ID)
+                  Format: <span className="font-mono text-cyan-400">{`{usermail}@fmail.com`}</span> (Masalan: <span className="font-mono text-cyan-400">aslbek@fmail.com</span>)
                 </p>
               </div>
             ) : (
