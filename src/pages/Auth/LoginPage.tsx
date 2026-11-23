@@ -34,7 +34,8 @@ export const LoginPage: React.FC = () => {
   const handleFentophIdSso = async () => {
     setIsLoading(true);
     try {
-      await loginWithFentophId();
+      const hint = fentophIdInput.trim() ? normalizedFentophId : undefined;
+      await loginWithFentophId(hint);
     } catch (err: any) {
       toast.error(err?.message || "Fentoph ID bilan bog'lanishda xatolik yuz berdi.");
       setIsLoading(false);

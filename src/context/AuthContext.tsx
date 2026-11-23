@@ -21,7 +21,7 @@ interface AuthContextType {
   login: (emailOrUsername: string, pass: string, rememberMe?: boolean) => Promise<boolean>;
   loginWithCorporateFentophId: (identifier: string, pass: string) => Promise<boolean>;
   loginWithGoogle: () => Promise<boolean>;
-  loginWithFentophId: () => Promise<void>;
+  loginWithFentophId: (loginHint?: string) => Promise<void>;
   handleFentophOAuthCallback: (code: string, state: string) => Promise<boolean>;
   loginAsDemoUser: (role?: 'user' | 'admin') => Promise<void>;
   verifyEmail: (code: string) => Promise<boolean>;
@@ -238,8 +238,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const loginWithFentophId = async (): Promise<void> => {
-    await initiateFentophIdLogin();
+  const loginWithFentophId = async (loginHint?: string): Promise<void> => {
+    await initiateFentophIdLogin(undefined, loginHint);
   };
 
   const handleFentophOAuthCallback = async (code: string, state: string): Promise<boolean> => {

@@ -44,7 +44,7 @@ async function generatePKCE(): Promise<{ verifier: string; challenge: string }> 
 /**
  * Initiates the Fentoph ID Single Sign-On flow by redirecting to authorization endpoint
  */
-export async function initiateFentophIdLogin(customRedirectUri?: string): Promise<void> {
+export async function initiateFentophIdLogin(customRedirectUri?: string, loginHint?: string): Promise<void> {
   const { verifier, challenge } = await generatePKCE();
   const state = Math.random().toString(36).slice(2) + Date.now().toString(36);
   const redirectUri = customRedirectUri || getFentophIdRedirectUri();
@@ -61,6 +61,9 @@ export async function initiateFentophIdLogin(customRedirectUri?: string): Promis
   url.searchParams.set('state', state);
   url.searchParams.set('code_challenge', challenge);
   url.searchParams.set('code_challenge_method', 'S256');
+  if (loginHint) {
+    url.searchParams.set('login_hint', loginHint);
+  }
 
   window.location.href = url.toString();
 }
